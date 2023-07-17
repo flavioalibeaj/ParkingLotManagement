@@ -8,39 +8,39 @@ import { PricingPlan } from 'src/app/models/pricing-plan';
 })
 export class PricingPlanService {
 
-  allPlans: PricingPlan[] = [
-    {
-      id: 0,
-      dailyPricing: 30,
-      hourlyPricing: 5,
-      minHours: 4,
-      type: "weekend"
-    },
-    {
-      id: 1,
-      dailyPricing: 20,
-      hourlyPricing: 3,
-      minHours: 4,
-      type: "weekday"
-    },
-  ]
+  // allPlans: PricingPlan[] = [
+  //   {
+  //     id: 0,
+  //     dailyPricing: 30,
+  //     hourlyPricing: 5,
+  //     minHours: 4,
+  //     type: "weekend"
+  //   },
+  //   {
+  //     id: 1,
+  //     dailyPricing: 20,
+  //     hourlyPricing: 3,
+  //     minHours: 4,
+  //     type: "weekday"
+  //   },
+  // ]
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<PricingPlan[]> {
-    // return this.http.get<PricingPlan[]>("https://localhost:7091/api/PricingPlan")
-    //   .pipe(
-    //     tap<PricingPlan[]>(value => console.log("All plans", value))
-    //   )
-    return of(this.allPlans)
+    return this.http.get<PricingPlan[]>("https://localhost:7091/api/PricingPlan")
+      .pipe(
+        tap<PricingPlan[]>(value => console.log("All plans", value))
+      )
+    // return of(this.allPlans)
   }
 
-  getOne(type: string): Observable<PricingPlan> {
-    return this.http.get<PricingPlan>(`https://localhost:7091/api/PricingPlan/${type}`)
-      .pipe(
-        tap<PricingPlan>(value => console.log("Single plan", value))
-      )
-  }
+  // getOne(type: string): Observable<PricingPlan> {
+  //   return this.http.get<PricingPlan>(`https://localhost:7091/api/PricingPlan/${type}`)
+  //     .pipe(
+  //       tap<PricingPlan>(value => console.log("Single plan", value))
+  //     )
+  // }
 
   update(type: string, editedPlan: PricingPlan): Observable<PricingPlan> {
     return this.http.put<PricingPlan>(`https://localhost:7091/api/PricingPlan/${type}`, editedPlan)

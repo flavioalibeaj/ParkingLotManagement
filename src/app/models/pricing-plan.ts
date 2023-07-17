@@ -2,6 +2,6 @@ export interface PricingPlan {
   id?: number,
   hourlyPricing: number,
   dailyPricing: number,
-  minHours: number,
+  minimumHours: number,
   type: "weekend" | "weekday"
 }

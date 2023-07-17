@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Logs } from 'src/app/models/logs';
 
 @Injectable({
@@ -24,8 +24,8 @@ export class LogsService {
       )
   }
 
-  getDayLogs(day: string): Observable<Logs> {
-    return this.http.get<Logs>(`https://localhost:7091/api/Logs/${day}`)
+  getOne(code: string): Observable<Logs> {
+    return this.http.get<Logs>(`https://localhost:7091/api/Logs/${code}`)
       .pipe(
         tap<Logs>(value => console.log("Single log", value))
       )

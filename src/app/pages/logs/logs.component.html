@@ -6,26 +6,57 @@
         <th scope="col">Check In</th>
         <th scope="col">Check Out</th>
         <th scope="col">Price</th>
+        <th scope="col">Checkout</th>
+        <th scope="col">View Details</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let log of allLogs">
         <td>{{ log.code }}</td>
         <td>{{ log.checkInTime | date : "medium" }}</td>
-        <td>{{ log.checkOutTime | date : "medium" }}</td>
-        <th>{{ log.price | currency : "EUR" }}</th>
+        <ng-container
+          *ngIf="log.checkOutTime !== '0001-01-01T00:00:00'; else carIsInside"
+        >
+          <td>{{ log.checkOutTime | date : "medium" }}</td>
+        </ng-container>
+        <ng-template #carIsInside>
+          <td>Car is Inside</td>
+        </ng-template>
+
+        <ng-container
+          *ngIf="log.checkOutTime !== '0001-01-01T00:00:00'; else noPriceYet"
+        >
+          <td>{{ log.price | currency : "EUR" }}</td>
+        </ng-container>
+
+        <ng-template #noPriceYet>
+          <td>Price Will Be Evaluated</td>
+        </ng-template>
+
+        <td>
+          <button class="btn btn-warning" (click)="updateLog(log.code)">
+            Check Out
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-light" [routerLink]="[log.code]">
+            View Details
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
 
   <form [formGroup]="newLog" (ngSubmit)="createLog()">
-    <button type="submit" class="btn btn-success" (click)="showAlert()">
-      Add Log
-    </button>
+    <button type="submit" class="btn btn-success">Check In</button>
   </form>
 
-  <div class="alert alert-success my-5" role="alert" *ngIf="isAlertShown">
-    This is a success alert—check it out!
+  <div class="alert alert-success my-5" role="alert" *ngIf="isSuccessShown">
+    Car Checked In
+  </div>
+
+  <div class="alert alert-danger my-5" role="alert" *ngIf="isDangerShown">
+    Error
   </div>
 </div>
 
