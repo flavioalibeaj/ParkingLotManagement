@@ -1,10 +1,10 @@
 export interface Subscriber {
-  first_name: string,
-  last_name: string,
-  id_card_number: string,
+  firstName: string,
+  lastName: string,
+  idCardNumber: string,
   email: string,
-  phone_number: string
-  birthday: Date,
-  plate_number: string,
+  phoneNumber: string
+  birthday: Date | string,
+  plateNumber: string,
   isDeleted: boolean
 }

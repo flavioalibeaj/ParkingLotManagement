@@ -1,1 +1,16 @@
-<p>parking-spot works!</p>
+<div class="container my-5">
+  <table class="table" *ngIf="allSpots; else noSpots">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let spot of allSpots">
+        <td>{{ spot.id }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noSpots>No Logs atm</ng-template>

@@ -3,17 +3,20 @@ import { CommonModule } from '@angular/common';
 
 import { LogsRoutingModule } from './logs-routing.module';
 import { LogsComponent } from './logs.component';
-import { NewLogComponent } from './new-log/new-log.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 
 @NgModule({
   declarations: [
     LogsComponent,
-    NewLogComponent
   ],
   imports: [
     CommonModule,
-    LogsRoutingModule
+    LogsRoutingModule,
+    ReactiveFormsModule,
+    MatSnackBarModule
   ]
 })
 export class LogsModule { }

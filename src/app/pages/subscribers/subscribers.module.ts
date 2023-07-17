@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { SubscribersRoutingModule } from './subscribers-routing.module';
 import { SubscribersComponent } from './subscribers.component';
+import { SingleSubscriberComponent } from './single-subscriber/single-subscriber.component';
 
 
 @NgModule({
   declarations: [
-    SubscribersComponent
+    SubscribersComponent,
+    SingleSubscriberComponent
   ],
   imports: [
     CommonModule,

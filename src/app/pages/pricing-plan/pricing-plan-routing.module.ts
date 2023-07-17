@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-// import { PricingPlanComponent } from './pricing-plan.component';
 import { PricingPlanComponent } from "./pricing-plan.component"
 
 const routes: Routes = [

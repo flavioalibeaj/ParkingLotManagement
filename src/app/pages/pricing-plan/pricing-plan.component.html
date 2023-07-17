@@ -1,1 +1,22 @@
-<p>parking-plan works!</p>
+<div class="container my-3 d-flex justify-content-around">
+  <div
+    class="card py-3 my-3"
+    style="width: 18rem"
+    *ngFor="let plan of pricingPlans"
+  >
+    <div class="card-body">
+      <h1 class="card-title py-3">{{ plan.type | uppercase }}</h1>
+      <p class="card-text font-weight-normal">
+        Hourly Pricing: {{ plan.hourlyPricing }}
+      </p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item font-weight-normal py-3">
+        Daily Pricing: {{ plan.dailyPricing }}
+      </li>
+      <li class="list-group-item font-weight-normal py-3">
+        Min Hours: {{ plan.minHours }}
+      </li>
+    </ul>
+  </div>
+</div>

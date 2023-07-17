@@ -1,8 +1,8 @@
 export interface Logs {
-  id: number,
-  code: string,
-  subscription_id: number,
-  checkin_time: Date,
-  checkout_time: Date,
-  price: number
+  id?: number, //Backend
+  code?: string, // Backend
+  subscriptionId?: number, //Front
+  checkInTime: string | Date, //Back
+  checkOutTime: string | Date, //Back
+  price?: number //Auto Generated
 }
