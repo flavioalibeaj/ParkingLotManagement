@@ -39,7 +39,6 @@ export class LogsComponent implements OnInit {
   }
 
   createLog() {
-    // this.newLog.controls['code'].setValue("123567922e2");
     this.logService.createLog(this.newLog.value).subscribe({
       next: (res) => {
         console.log("Created Log Succesfully", res)
@@ -83,5 +82,4 @@ export class LogsComponent implements OnInit {
       this.isDangerShown = false
     })
   }
-
 }

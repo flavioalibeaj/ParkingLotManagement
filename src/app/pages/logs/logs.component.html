@@ -33,11 +33,20 @@
           <td>Price Will Be Evaluated</td>
         </ng-template>
 
-        <td>
-          <button class="btn btn-warning" (click)="updateLog(log.code)">
-            Check Out
-          </button>
-        </td>
+        <ng-container
+          *ngIf="log.checkOutTime === '0001-01-01T00:00:00'; else checkedOut"
+        >
+          <td>
+            <button class="btn btn-warning" (click)="updateLog(log.code)">
+              Check Out
+            </button>
+          </td>
+        </ng-container>
+        <ng-template #checkedOut>
+          <td>
+            <button class="btn btn-warning" disabled="true">Checked Out</button>
+          </td>
+        </ng-template>
         <td>
           <button class="btn btn-light" [routerLink]="[log.code]">
             View Details
