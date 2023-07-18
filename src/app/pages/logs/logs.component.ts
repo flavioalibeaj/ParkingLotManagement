@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Logs } from 'src/app/models/logs';
 import { LogsService } from 'src/app/services/logs/logs.service';
 
@@ -16,11 +17,11 @@ export class LogsComponent implements OnInit {
   alertTimeout: any
   newLog!: FormGroup
 
-  constructor(private logService: LogsService) { }
+  constructor(private logService: LogsService, private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.newLog = new FormGroup({
-      code: new FormControl('')
+      subscriptionId: new FormControl(null)
     });
     this.getAll()
   }
@@ -41,7 +42,7 @@ export class LogsComponent implements OnInit {
     this.logService.createLog(this.newLog.value).subscribe({
       next: (res) => {
         console.log("Created Log Succesfully", res)
-        this.allLogs.unshift(res)
+        this.allLogs.push(res)
         this.successAlert()
       },
       error: (err) => {

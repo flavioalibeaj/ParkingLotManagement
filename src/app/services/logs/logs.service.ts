@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Logs } from 'src/app/models/logs';
@@ -25,7 +25,9 @@ export class LogsService {
   }
 
   getOne(code: string): Observable<Logs> {
-    return this.http.get<Logs>(`https://localhost:7091/api/Logs/${code}`)
+    const params = new HttpParams().set("searchquery", code)
+
+    return this.http.get<Logs>(`https://localhost:7091/api/Logs`, { params })
       .pipe(
         tap<Logs>(value => console.log("Single log", value))
       )

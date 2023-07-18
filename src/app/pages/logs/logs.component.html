@@ -1,7 +1,12 @@
 <div class="container my-5">
-  <form [formGroup]="newLog" (ngSubmit)="createLog()">
-    <button type="submit" class="btn btn-success">Check In</button>
-  </form>
+  <button
+    type="submit"
+    class="btn btn-light mb-3"
+    data-bs-toggle="modal"
+    data-bs-target="#staticBackdrop"
+  >
+    Check In
+  </button>
 
   <table class="table" *ngIf="allLogs; else noLogs">
     <thead>
@@ -68,3 +73,43 @@
 </div>
 
 <ng-template #noLogs>No Logs atm</ng-template>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          Add Subscriber
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="newLog" (ngSubmit)="createLog()">
+          <div class="form-group">
+            <label for="subscriptionId">Subscriber ID</label>
+            <input
+              type="email"
+              class="form-control"
+              formControlName="subscriptionId"
+            />
+          </div>
+          <button type="submit" class="btn btn-success mt-3">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

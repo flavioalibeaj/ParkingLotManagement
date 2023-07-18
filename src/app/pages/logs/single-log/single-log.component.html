@@ -1,18 +1,20 @@
-<!-- <div class="container my-3 d-flex justify-content-around">
-  <div class="card py-3 my-3" style="width: 18rem">
-    <div class="card-body">
-      <h1 class="card-title py-3">{{ log.code | uppercase }}</h1>
-      <p class="card-text font-weight-normal">
-        Check In: {{ log.checkInTime }}
-      </p>
+<ng-container *ngIf="log">
+  <div class="container my-3 d-flex justify-content-around">
+    <div class="card py-3 my-3" style="width: 18rem">
+      <div class="card-body">
+        <h1 class="card-title py-3">{{ log.code | uppercase }}</h1>
+        <p class="card-text font-weight-normal">
+          Check In: {{ log.checkInTime }}
+        </p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item font-weight-normal py-3">
+          Check Out: {{ log.checkOutTime }}
+        </li>
+        <li class="list-group-item font-weight-normal py-3">
+          Price: {{ log.price }}
+        </li>
+      </ul>
     </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item font-weight-normal py-3">
-        Check Out: {{ log.checkOutTime }}
-      </li>
-      <li class="list-group-item font-weight-normal py-3">
-        Price: {{ log.price }}
-      </li>
-    </ul>
   </div>
-</div> -->
+</ng-container>

@@ -13,17 +13,13 @@ export class SingleLogComponent implements OnInit {
   logCode!: string
   log!: Logs
 
-  constructor(private activeRoute: ActivatedRoute, private logService: LogsService) {
-    this.activeRoute.queryParams.subscribe(data => {
-      console.log(data)
-    })
-  }
+  constructor(private activeRoute: ActivatedRoute, private logService: LogsService) { }
 
   ngOnInit() {
-    // this.activeRoute.params.subscribe(params => {
-    //   this.logCode = params['code']
-    // })
-
+    this.activeRoute.params.subscribe(params => {
+      this.logCode = params['code']
+      this.getData()
+    })
   }
 
   getData() {
