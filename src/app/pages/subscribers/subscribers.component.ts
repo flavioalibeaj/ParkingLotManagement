@@ -26,10 +26,12 @@ export class SubscribersComponent implements OnInit {
       IdCardNumber: new FormControl(null, Validators.required),
       PlateNumber: new FormControl(null, Validators.required),
       Birthday: new FormControl(null, Validators.required),
-      // subscriptionForCreationDTO: new FormGroup({
-      StartDate: new FormControl(null, Validators.required),
-      EndDate: new FormControl(null, Validators.required),
-      // })
+      subscriptionForCreationDTO: new FormGroup({
+        StartDate: new FormControl(null, Validators.required),
+        EndDate: new FormControl(null, Validators.required),
+        DiscountValue: new FormControl(null, Validators.required),
+        Price: new FormControl(null, Validators.required),
+      })
     })
   }
 

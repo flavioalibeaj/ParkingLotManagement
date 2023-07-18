@@ -111,17 +111,38 @@
               formControlName="Birthday"
             />
           </div>
-          <div class="mb-3">
-            <label for="StartDate" class="form-label">StartDate</label>
-            <input
-              type="date"
-              class="form-control"
-              formControlName="StartDate"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="EndDate" class="form-label">EndDate</label>
-            <input type="date" class="form-control" formControlName="EndDate" />
+
+          <div formGroupName="subscriptionForCreationDTO">
+            <div class="mb-3">
+              <label for="StartDate" class="form-label">StartDate</label>
+              <input
+                type="date"
+                class="form-control"
+                formControlName="StartDate"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="EndDate" class="form-label">EndDate</label>
+              <input
+                type="date"
+                class="form-control"
+                formControlName="EndDate"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="DiscountValue" class="form-label"
+                >DiscountValue</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                formControlName="DiscountValue"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="Price" class="form-label">Price</label>
+              <input type="date" class="form-control" formControlName="Price" />
+            </div>
           </div>
 
           <div class="modal-footer">
