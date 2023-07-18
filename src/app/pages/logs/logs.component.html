@@ -1,4 +1,8 @@
 <div class="container my-5">
+  <form [formGroup]="newLog" (ngSubmit)="createLog()">
+    <button type="submit" class="btn btn-success">Check In</button>
+  </form>
+
   <table class="table" *ngIf="allLogs; else noLogs">
     <thead>
       <tr>
@@ -14,18 +18,16 @@
       <tr *ngFor="let log of allLogs">
         <td>{{ log.code }}</td>
         <td>{{ log.checkInTime | date : "medium" }}</td>
-        <ng-container
-          *ngIf="log.checkOutTime !== '0001-01-01T00:00:00'; else carIsInside"
-        >
+
+        <ng-container *ngIf="log.checkOutTime !== null; else carIsInside">
           <td>{{ log.checkOutTime | date : "medium" }}</td>
         </ng-container>
+
         <ng-template #carIsInside>
           <td>Car is Inside</td>
         </ng-template>
 
-        <ng-container
-          *ngIf="log.checkOutTime !== '0001-01-01T00:00:00'; else noPriceYet"
-        >
+        <ng-container *ngIf="log.checkOutTime !== null; else noPriceYet">
           <td>{{ log.price | currency : "EUR" }}</td>
         </ng-container>
 
@@ -33,20 +35,20 @@
           <td>Price Will Be Evaluated</td>
         </ng-template>
 
-        <ng-container
-          *ngIf="log.checkOutTime === '0001-01-01T00:00:00'; else checkedOut"
-        >
+        <ng-container *ngIf="!log.checkOutTime; else carIsCheckedOut">
           <td>
             <button class="btn btn-warning" (click)="updateLog(log.code)">
               Check Out
             </button>
           </td>
         </ng-container>
-        <ng-template #checkedOut>
+
+        <ng-template #carIsCheckedOut>
           <td>
             <button class="btn btn-warning" disabled="true">Checked Out</button>
           </td>
         </ng-template>
+
         <td>
           <button class="btn btn-light" [routerLink]="[log.code]">
             View Details
@@ -55,10 +57,6 @@
       </tr>
     </tbody>
   </table>
-
-  <form [formGroup]="newLog" (ngSubmit)="createLog()">
-    <button type="submit" class="btn btn-success">Check In</button>
-  </form>
 
   <div class="alert alert-success my-5" role="alert" *ngIf="isSuccessShown">
     Car Checked In

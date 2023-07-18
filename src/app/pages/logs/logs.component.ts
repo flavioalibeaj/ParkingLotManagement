@@ -29,11 +29,10 @@ export class LogsComponent implements OnInit {
     this.logService.getAllLogs()
       .subscribe({
         next: (logs: Logs[]) => {
-          console.log("All logs", logs)
           this.allLogs = logs
         },
         error: (err) => {
-          console.log("Error", err)
+          throw err
         }
       })
   }
@@ -42,7 +41,7 @@ export class LogsComponent implements OnInit {
     this.logService.createLog(this.newLog.value).subscribe({
       next: (res) => {
         console.log("Created Log Succesfully", res)
-        this.allLogs.push(res)
+        this.allLogs.unshift(res)
         this.successAlert()
       },
       error: (err) => {

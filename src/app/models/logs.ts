@@ -5,5 +5,4 @@ export interface Logs {
   checkInTime: string | Date, //Back
   checkOutTime: string | Date, //Back
   price?: number //Auto Generated
-  checkedOut: boolean
 }
