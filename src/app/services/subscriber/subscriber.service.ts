@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Subscriber } from 'src/app/models/subscriber';
@@ -18,7 +18,12 @@ export class SubscriberService {
   }
 
   create(subscriber: Subscriber): Observable<Subscriber> {
-    return this.http.post<Subscriber>("https://localhost:7091/api/Subscriber", subscriber)
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post<Subscriber>("https://localhost:7091/api/Subscriber", subscriber, { headers })
       .pipe(
         tap<Subscriber>(value => console.log("Created subscriber", value))
       )

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LogsRoutingModule } from './logs-routing.module';
 import { LogsComponent } from './logs.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+// import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SingleLogComponent } from './single-log/single-log.component';
 
 
@@ -18,7 +18,7 @@ import { SingleLogComponent } from './single-log/single-log.component';
     CommonModule,
     LogsRoutingModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    // MatSnackBarModule
   ]
 })
 export class LogsModule { }
