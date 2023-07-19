@@ -1,3 +1,5 @@
+import { Subscription } from "./subscription"
+
 export interface Logs {
   id?: number, //Backend
   code: string, // Backend
@@ -5,4 +7,5 @@ export interface Logs {
   checkInTime: string | Date, //Back
   checkOutTime: string | Date, //Back
   price: number //Auto Generated
+  subscription: Subscription
 }

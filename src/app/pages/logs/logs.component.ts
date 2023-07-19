@@ -91,7 +91,9 @@ export class LogsComponent implements OnInit {
 
   filterLogs() {
     if (this.searchTermRecieved) {
-      this.allLogs = this.allLogs.filter((log) => log.code.includes(this.searchTermRecieved));
+      this.allLogs = this.allLogs.filter((log) => log.code === this.searchTermRecieved ||
+        (log.subscriptionId !== null && log.subscription.subscriber.firstName.includes(this.searchTermRecieved))
+      );
     } else {
       this.getAll(); // If no search term received, fetch all logs again.
     }

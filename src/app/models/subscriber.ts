@@ -1,3 +1,5 @@
+import { Subscription } from "./subscription"
+
 export interface Subscriber {
   id?: number
   firstName: string,
@@ -7,5 +9,6 @@ export interface Subscriber {
   phoneNumber: string
   birthday: Date | string,
   plateNumber: string,
-  isDeleted: boolean
+  isDeleted: boolean,
+  subscription: Subscription
 }
