@@ -1,1 +1,30 @@
-<p>subscription works!</p>
+<div class="container my-3">
+  <table class="table" *ngIf="allSubscriptions; else noSubscriptions">
+    <thead>
+      <tr>
+        <th scope="col">start_date</th>
+        <th scope="col">subscriber_id</th>
+        <th scope="col">View Details</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let subscription of allSubscriptions">
+        <td>{{ subscription.startDate }}</td>
+        <td>{{ subscription.subscriberId }}</td>
+        <td>
+          <button class="btn btn-light" [routerLink]="[subscription.id]">
+            View Details
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="delete(subscription.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noSubscriptions>No Subscriptions atm</ng-template>

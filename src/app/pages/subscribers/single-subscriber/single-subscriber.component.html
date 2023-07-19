@@ -1,1 +1,101 @@
-<p>single-subscriber works!</p>
+<ng-container *ngIf="subscriber">
+  <p>{{ subscriber.firstName }}</p>
+  <p>{{ subscriber.lastName }}</p>
+  <p>{{ subscriber.plateNumber }}</p>
+  <p>{{ subscriber.idCardNumber }}</p>
+  <p>{{ subscriber.email }}</p>
+  <p>{{ subscriber.phoneNumber }}</p>
+  <p>{{ subscriber.birthday }}</p>
+
+  <button
+    class="btn btn-light"
+    data-bs-toggle="modal"
+    data-bs-target="#staticBackdrop"
+  >
+    Update
+  </button>
+</ng-container>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateSub" (ngSubmit)="update()">
+          <div class="mb-3">
+            <label for="firstName" class="form-label">firstName</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="firstName"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="lastName" class="form-label">lastName</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="lastName"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="idCardNumber" class="form-label">idCardNumber</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="idCardNumber"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">email</label>
+            <input type="text" class="form-control" formControlName="email" />
+          </div>
+          <div class="mb-3">
+            <label for="phoneNumber" class="form-label">phoneNumber</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="phoneNumber"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="plateNumber" class="form-label">plateNumber</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="plateNumber"
+            />
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -39,6 +39,7 @@ export class LogsComponent implements OnInit {
           this.allLogs = logs.reverse()
         },
         error: (err) => {
+          this.errorAlert()
           throw err
         }
       })
@@ -47,13 +48,12 @@ export class LogsComponent implements OnInit {
   createLog() {
     this.logService.createLog(this.newLog.value).subscribe({
       next: (res) => {
-        console.log("Created Log Succesfully", res)
         this.allLogs.unshift(res)
         this.successAlert()
       },
       error: (err) => {
-        console.log("Error Creating Log", err)
         this.errorAlert()
+        throw err
       }
     })
   }
@@ -71,11 +71,11 @@ export class LogsComponent implements OnInit {
   updateLog(code: string) {
     this.logService.updateLog(code, this.newLog.value).subscribe({
       next: (res) => {
-        console.log("Edited Log Succesfully", res)
         this.getAll()
       },
       error: (err) => {
-        console.log("Error Editing Log", err)
+        this.errorAlert()
+        throw err
       }
     })
   }
@@ -89,33 +89,25 @@ export class LogsComponent implements OnInit {
     })
   }
 
-  // filterLogs() {
-  //   if (this.searchTermRecieved) {
-  //     this.allLogs = this.allLogs.filter((log) =>
-  //       log.code === this.searchTermRecieved ||
-  //       (log.subscriptionId !== null && log.subscription.subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase()))
-  //     );
-  //   } else {
-  //     this.getAll();
-  //   }
-  // }
-
   filterLogs() {
     if (this.searchTermRecieved) {
       this.allLogs = this.allLogs.filter((log) => {
-        console.log("log:", log);
-        const logCodeMatch = log.code === this.searchTermRecieved;
-        const subscriberFirstName = log.subscription.subscriber.firstName;
-        console.log("subscriberFirstName:", subscriberFirstName);
-        const subscriberFirstNameMatch = subscriberFirstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
-        console.log("subscriberFirstNameMatch:", subscriberFirstNameMatch);
+        const codeMatch = log.code.toLowerCase() === this.searchTermRecieved.toLowerCase();
 
-        return logCodeMatch || subscriberFirstNameMatch;
+        if (log.subscription && log.subscription.subscriber) {
+          const subFNameMatch = log.subscription.subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+          const subLNameMatch = log.subscription.subscriber.lastName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+
+          return codeMatch || subFNameMatch || subLNameMatch;
+        } else {
+          return codeMatch;
+        }
       });
     } else {
       this.getAll();
     }
   }
+
 
 
 

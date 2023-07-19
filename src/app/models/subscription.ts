@@ -4,11 +4,11 @@ import { Logs } from "./logs"
 export interface Subscription {
   id: number,
   code: string,
-  subscriber_id: number,
+  subscriberId: number,
   subscriber: Subscriber
   price: number,
-  discount_value: number,
-  start_date: Date,
+  discountValue: number,
+  startDate: Date,
   end_date: Date,
   isDeleted: boolean
   logs?: Logs

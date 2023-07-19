@@ -37,8 +37,14 @@ export class PricingPlanComponent implements OnInit {
   }
 
   update(type: string) {
-    this.pricingPlanService.update(type, this.updateForm.value).subscribe(res => {
-      console.log("Updated Succesfully")
-    })
+    this.pricingPlanService.update(type, this.updateForm.value).subscribe({
+      next: (updatedPlan: PricingPlan) => {
+        this.getAll()
+      },
+      error: (err) => {
+        throw err;
+      }
+    });
   }
+
 }

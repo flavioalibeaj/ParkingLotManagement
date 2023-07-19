@@ -12,9 +12,9 @@ export class LogsService {
 
   getAllLogs(): Observable<Logs[]> {
     return this.http.get<Logs[]>("https://localhost:7091/api/Logs")
-      .pipe(
-        tap<Logs[]>(value => console.log("All logs", value))
-      )
+    // .pipe(
+    //   tap<Logs[]>(value => console.log("All logs", value))
+    // )
   }
 
   createLog(log: Logs): Observable<Logs> {
@@ -24,24 +24,24 @@ export class LogsService {
     });
 
     return this.http.post<Logs>("https://localhost:7091/api/Logs", log, { headers })
-      .pipe(
-        tap<Logs>(value => console.log("Created log", value))
-      )
+    // .pipe(
+    //   tap<Logs>(value => console.log("Created log", value))
+    // )
   }
 
   getOne(code: string): Observable<Logs> {
     const params = new HttpParams().set("searchquery", code)
 
-    return this.http.get<Logs>(`https://localhost:7091/api/Logs`, { params })
-      .pipe(
-        tap<Logs>(value => console.log("Single log", value))
-      )
+    return this.http.get<Logs>(`https://localhost:7091/api/Logs/code/${code}`, { params })
+    // .pipe(
+    //   tap<Logs>(value => console.log("Single log", value))
+    // )
   }
 
   updateLog(code: string, editedLog: Logs): Observable<Logs> {
     return this.http.put<Logs>(`https://localhost:7091/api/Logs/${code}`, editedLog)
-      .pipe(
-        tap<Logs>(value => console.log("Updated log", value))
-      )
+    // .pipe(
+    //   tap<Logs>(value => console.log("Updated log", value))
+    // )
   }
 }

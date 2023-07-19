@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { findIndex } from 'rxjs';
 import { Subscriber } from 'src/app/models/subscriber';
+import { SearchService } from 'src/app/services/search/search.service';
 import { SubscriberService } from 'src/app/services/subscriber/subscriber.service';
 
 @Component({
@@ -13,8 +14,9 @@ export class SubscribersComponent implements OnInit {
 
   allSubscribers!: Subscriber[]
   createSubForm!: FormGroup
+  searchTermRecieved!: string
 
-  constructor(private subscribersService: SubscriberService, public dialog: MatDialog) { }
+  constructor(private subscribersService: SubscriberService, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.getAll()
@@ -30,8 +32,11 @@ export class SubscribersComponent implements OnInit {
         StartDate: new FormControl(null, Validators.required),
         EndDate: new FormControl(null, Validators.required),
         DiscountValue: new FormControl(null, Validators.required),
-        // Price: new FormControl(null, Validators.required),
       })
+    })
+    this.searchService.dataEmitter.subscribe(searchTerm => {
+      this.searchTermRecieved = searchTerm
+      this.filterLogs()
     })
   }
 
@@ -41,22 +46,48 @@ export class SubscribersComponent implements OnInit {
         this.allSubscribers = subscribers
       },
       error: (err) => {
-        console.log("Error", err)
+        throw err
       }
     })
   }
 
   submitNewSub() {
-    console.log("Success")
     this.subscribersService.create(this.createSubForm.value).subscribe({
       next: (response: Subscriber) => {
-        console.log("Created new sub")
         this.allSubscribers.push(response)
       },
       error: (err) => {
-        console.log("Error", err)
+        throw err
       }
     })
+  }
+
+  delete(id: number) {
+    this.subscribersService.deleteSubscriber(id).subscribe({
+      next: (value) => {
+        const index = this.allSubscribers.findIndex(subs => subs.id === id);
+        this.allSubscribers.splice(index, 1)
+      },
+      error: (err) => {
+        throw err
+      }
+    })
+  }
+
+  filterLogs() {
+    if (this.searchTermRecieved) {
+      this.allSubscribers = this.allSubscribers.filter((sub) => {
+
+        const firstNameMatch = sub.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+        const lastNameMatch = sub.lastName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+        const idCardNumberMatch = sub.idCardNumber.toLowerCase() == this.searchTermRecieved.toLowerCase();
+        const emailMatch = sub.email.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+
+        return firstNameMatch || lastNameMatch || idCardNumberMatch || emailMatch;
+      });
+    } else {
+      this.getAll();
+    }
   }
 
 }

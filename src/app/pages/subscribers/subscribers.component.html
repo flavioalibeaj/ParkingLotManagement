@@ -1,7 +1,7 @@
-<div class="container my-5">
+<div class="container my-3">
   <button
     type="button"
-    class="btn btn-light mb-5"
+    class="btn btn-info mb-3"
     data-bs-toggle="modal"
     data-bs-target="#staticBackdrop"
   >
@@ -14,8 +14,8 @@
         <th scope="col">First Name</th>
         <th scope="col">Last Name</th>
         <th scope="col">Plate Number</th>
-        <th scope="col">Id</th>
         <th scope="col">View Details</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -23,10 +23,14 @@
         <td>{{ subscriber.firstName }}</td>
         <td>{{ subscriber.lastName }}</td>
         <td>{{ subscriber.plateNumber }}</td>
-        <td>{{ subscriber.id }}</td>
         <td>
           <button class="btn btn-light" [routerLink]="[subscriber.id]">
             View Details
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="delete(subscriber.id)">
+            Delete
           </button>
         </td>
       </tr>
