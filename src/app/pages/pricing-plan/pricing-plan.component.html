@@ -17,6 +17,85 @@
       <li class="list-group-item font-weight-normal py-3">
         Min Hours: {{ plan.minimumHours }}
       </li>
+      <button
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#staticBackdrop"
+      >
+        Update
+      </button>
     </ul>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">
+              Update {{ plan.type }}
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="updateForm" (ngSubmit)="update(plan.type)">
+              <div class="mb-3">
+                <label for="hourlyPricing" class="form-label"
+                  >hourlyPricing</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="hourlyPricing"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="dailyPricing" class="form-label"
+                  >dailyPricing</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="dailyPricing"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="minimumHours" class="form-label"
+                  >minimumHours</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="minimumHours"
+                />
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

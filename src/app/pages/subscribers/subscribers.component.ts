@@ -30,7 +30,7 @@ export class SubscribersComponent implements OnInit {
         StartDate: new FormControl(null, Validators.required),
         EndDate: new FormControl(null, Validators.required),
         DiscountValue: new FormControl(null, Validators.required),
-        Price: new FormControl(null, Validators.required),
+        // Price: new FormControl(null, Validators.required),
       })
     })
   }

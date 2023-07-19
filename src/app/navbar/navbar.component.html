@@ -30,14 +30,22 @@
           <a class="nav-link" routerLink="subscriptions">Subscriptions</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
+      <form
+        [formGroup]="searchForm"
+        class="d-flex"
+        role="search"
+        (ngSubmit)="search()"
+      >
         <input
           class="form-control me-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
+          formControlName="searchTerm"
         />
-        <button class="btn btn-outline-light" type="submit">Search</button>
+        <button type="submit" class="btn btn-outline-light" type="submit">
+          Search
+        </button>
       </form>
     </div>
   </div>

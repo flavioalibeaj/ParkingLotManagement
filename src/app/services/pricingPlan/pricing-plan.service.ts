@@ -8,23 +8,6 @@ import { PricingPlan } from 'src/app/models/pricing-plan';
 })
 export class PricingPlanService {
 
-  // allPlans: PricingPlan[] = [
-  //   {
-  //     id: 0,
-  //     dailyPricing: 30,
-  //     hourlyPricing: 5,
-  //     minHours: 4,
-  //     type: "weekend"
-  //   },
-  //   {
-  //     id: 1,
-  //     dailyPricing: 20,
-  //     hourlyPricing: 3,
-  //     minHours: 4,
-  //     type: "weekday"
-  //   },
-  // ]
-
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<PricingPlan[]> {
@@ -32,7 +15,6 @@ export class PricingPlanService {
       .pipe(
         tap<PricingPlan[]>(value => console.log("All plans", value))
       )
-    // return of(this.allPlans)
   }
 
   // getOne(type: string): Observable<PricingPlan> {

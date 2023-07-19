@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { Logs } from 'src/app/models/logs';
 import { LogsService } from 'src/app/services/logs/logs.service';
+import { SearchService } from 'src/app/services/search/search.service';
 
 @Component({
   selector: 'app-logs',
@@ -17,20 +17,26 @@ export class LogsComponent implements OnInit {
   alertTimeout: any
   newLog!: FormGroup
 
-  constructor(private logService: LogsService, private activeRoute: ActivatedRoute) { }
+  searchTermRecieved!: string
+
+  constructor(private logService: LogsService, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.newLog = new FormGroup({
       subscriptionId: new FormControl(null)
     });
     this.getAll()
+    this.searchService.dataEmitter.subscribe(res => {
+      this.searchTermRecieved = res;
+      this.filterLogs()
+    })
   }
 
   getAll() {
     this.logService.getAllLogs()
       .subscribe({
         next: (logs: Logs[]) => {
-          this.allLogs = logs
+          this.allLogs = logs.reverse()
         },
         error: (err) => {
           throw err
@@ -42,7 +48,7 @@ export class LogsComponent implements OnInit {
     this.logService.createLog(this.newLog.value).subscribe({
       next: (res) => {
         console.log("Created Log Succesfully", res)
-        this.allLogs.push(res)
+        this.allLogs.unshift(res)
         this.successAlert()
       },
       error: (err) => {
@@ -81,5 +87,13 @@ export class LogsComponent implements OnInit {
     this.alertTimeout = setTimeout(() => {
       this.isDangerShown = false
     })
+  }
+
+  filterLogs() {
+    if (this.searchTermRecieved) {
+      this.allLogs = this.allLogs.filter((log) => log.code.includes(this.searchTermRecieved));
+    } else {
+      this.getAll(); // If no search term received, fetch all logs again.
+    }
   }
 }

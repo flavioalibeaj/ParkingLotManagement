@@ -1,5 +1,5 @@
 export interface PricingPlan {
-  id?: number,
+  id: number,
   hourlyPricing: number,
   dailyPricing: number,
   minimumHours: number,

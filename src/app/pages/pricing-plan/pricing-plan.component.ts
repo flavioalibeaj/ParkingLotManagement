@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PricingPlan } from 'src/app/models/pricing-plan';
 import { PricingPlanService } from 'src/app/services/pricingPlan/pricing-plan.service';
 
@@ -10,10 +11,16 @@ import { PricingPlanService } from 'src/app/services/pricingPlan/pricing-plan.se
 export class PricingPlanComponent implements OnInit {
 
   pricingPlans!: PricingPlan[]
+  updateForm!: FormGroup
 
   constructor(private pricingPlanService: PricingPlanService) { }
 
   ngOnInit(): void {
+    this.updateForm = new FormGroup({
+      hourlyPricing: new FormControl(null, Validators.required),
+      dailyPricing: new FormControl(null, Validators.required),
+      minimumHours: new FormControl(null, Validators.required)
+    })
     this.getAll()
   }
 
@@ -26,6 +33,12 @@ export class PricingPlanComponent implements OnInit {
       error: (err) => {
         console.log("Error", err)
       }
+    })
+  }
+
+  update(type: string) {
+    this.pricingPlanService.update(type, this.updateForm.value).subscribe(res => {
+      console.log("Updated Succesfully")
     })
   }
 }
