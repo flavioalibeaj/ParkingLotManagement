@@ -1,7 +1,7 @@
 import { Subscription } from "./subscription"
 
 export interface Subscriber {
-  id?: number
+  id: number
   firstName: string,
   lastName: string,
   idCardNumber: string,

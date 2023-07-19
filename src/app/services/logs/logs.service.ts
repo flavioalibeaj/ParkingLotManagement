@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Logs } from 'src/app/models/logs';
@@ -18,7 +18,12 @@ export class LogsService {
   }
 
   createLog(log: Logs): Observable<Logs> {
-    return this.http.post<Logs>("https://localhost:7091/api/Logs", log)
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post<Logs>("https://localhost:7091/api/Logs", log, { headers })
       .pipe(
         tap<Logs>(value => console.log("Created log", value))
       )

@@ -89,13 +89,34 @@ export class LogsComponent implements OnInit {
     })
   }
 
+  // filterLogs() {
+  //   if (this.searchTermRecieved) {
+  //     this.allLogs = this.allLogs.filter((log) =>
+  //       log.code === this.searchTermRecieved ||
+  //       (log.subscriptionId !== null && log.subscription.subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase()))
+  //     );
+  //   } else {
+  //     this.getAll();
+  //   }
+  // }
+
   filterLogs() {
     if (this.searchTermRecieved) {
-      this.allLogs = this.allLogs.filter((log) => log.code === this.searchTermRecieved ||
-        (log.subscriptionId !== null && log.subscription.subscriber.firstName.includes(this.searchTermRecieved))
-      );
+      this.allLogs = this.allLogs.filter((log) => {
+        console.log("log:", log);
+        const logCodeMatch = log.code === this.searchTermRecieved;
+        const subscriberFirstName = log.subscription.subscriber.firstName;
+        console.log("subscriberFirstName:", subscriberFirstName);
+        const subscriberFirstNameMatch = subscriberFirstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+        console.log("subscriberFirstNameMatch:", subscriberFirstNameMatch);
+
+        return logCodeMatch || subscriberFirstNameMatch;
+      });
     } else {
-      this.getAll(); // If no search term received, fetch all logs again.
+      this.getAll();
     }
   }
+
+
+
 }
