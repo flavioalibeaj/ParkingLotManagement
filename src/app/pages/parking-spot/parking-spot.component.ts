@@ -9,7 +9,7 @@ import { ParkingSpotService } from 'src/app/services/parkingSpot/parking-spot.se
 })
 export class ParkingSpotComponent implements OnInit {
 
-  allSpots!: ParkingSpot[]
+  allSpots!: ParkingSpot
 
   constructor(private parkingSpotService: ParkingSpotService) { }
 
@@ -19,13 +19,48 @@ export class ParkingSpotComponent implements OnInit {
 
   getAllSpots() {
     this.parkingSpotService.getAllSpots().subscribe({
-      next: (spots: ParkingSpot[]) => {
-        this.allSpots = Array.from(spots)
+      next: (spots: ParkingSpot) => {
+        this.allSpots = spots
       },
       error: (err) => {
         console.log("Error", err)
       }
     })
+  }
+
+  getRange(n: number): number[] {
+    return Array.from({ length: n }, (_, i) => i + 1);
+  }
+
+  getSpotStatusClass(spotNumber: number): string {
+    const spotStatus = this.getSpotStatus(spotNumber);
+
+    switch (spotStatus) {
+      case 'freeRegularSpots':
+        return 'bg-success';
+      case 'freeReservedSpots':
+        return 'bg-info';
+      case 'occupiedRegularSpots':
+        return 'bg-danger';
+      case 'occupiedReservedSpots':
+        return 'bg-warning';
+      default:
+        return '';
+    }
+  }
+
+  private getSpotStatus(spotNumber: number): string {
+    if (this.allSpots.freeRegularSpots >= spotNumber) {
+      return 'freeRegularSpots';
+    } else if (this.allSpots.freeReservedSpots >= spotNumber - this.allSpots.freeRegularSpots) {
+      return 'freeReservedSpots';
+    } else if (this.allSpots.occupiedRegularSpots >= spotNumber - this.allSpots.freeRegularSpots - this.allSpots.freeReservedSpots) {
+      return 'occupiedRegularSpots';
+    } else if (this.allSpots.occupiedReservedSpots >= spotNumber - this.allSpots.freeRegularSpots - this.allSpots.freeReservedSpots - this.allSpots.occupiedRegularSpots) {
+      return 'occupiedReservedSpots';
+    } else {
+      return '';
+    }
   }
 
 }

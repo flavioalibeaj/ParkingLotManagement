@@ -8,60 +8,62 @@
     Check In
   </button>
 
-  <table class="table" *ngIf="allLogs; else noLogs">
-    <thead>
-      <tr>
-        <th scope="col">Code</th>
-        <th scope="col">Check In</th>
-        <th scope="col">Check Out</th>
-        <th scope="col">Price</th>
-        <th scope="col">Checkout</th>
-        <th scope="col">View Details</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let log of allLogs">
-        <td>{{ log.code }}</td>
-        <td>{{ log.checkInTime | date : "medium" }}</td>
+  <div class="table-responsive">
+    <table class="table" *ngIf="allLogs; else noLogs">
+      <thead>
+        <tr>
+          <th scope="col">Code</th>
+          <th scope="col">Check In</th>
+          <th scope="col">View Details</th>
+          <th scope="col">Checkout</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of allLogs">
+          <td>{{ log.code }}</td>
+          <td>{{ log.checkInTime | date : "medium" }}</td>
 
-        <ng-container *ngIf="log.checkOutTime !== null; else carIsInside">
-          <td>{{ log.checkOutTime | date : "medium" }}</td>
-        </ng-container>
+          <!-- <ng-container *ngIf="log.checkOutTime !== null; else carIsInside">
+            <td>{{ log.checkOutTime | date : "medium" }}</td>
+          </ng-container>
 
-        <ng-template #carIsInside>
-          <td>Car is Inside</td>
-        </ng-template>
+          <ng-template #carIsInside>
+            <td>Car is Inside</td>
+          </ng-template> -->
 
-        <ng-container *ngIf="log.checkOutTime !== null; else noPriceYet">
-          <td>{{ log.price | currency : "EUR" }}</td>
-        </ng-container>
+          <!-- <ng-container *ngIf="log.checkOutTime !== null; else noPriceYet">
+            <td>{{ log.price | currency : "EUR" }}</td>
+          </ng-container>
 
-        <ng-template #noPriceYet>
-          <td>Price Will Be Evaluated</td>
-        </ng-template>
+          <ng-template #noPriceYet>
+            <td>Price Will Be Evaluated</td>
+          </ng-template> -->
 
-        <ng-container *ngIf="!log.checkOutTime; else carIsCheckedOut">
           <td>
-            <button class="btn btn-warning" (click)="updateLog(log.code)">
-              Check Out
+            <button class="btn btn-light" [routerLink]="[log.code]">
+              View Details
             </button>
           </td>
-        </ng-container>
 
-        <ng-template #carIsCheckedOut>
-          <td>
-            <button class="btn btn-warning" disabled="true">Checked Out</button>
-          </td>
-        </ng-template>
+          <ng-container *ngIf="!log.checkOutTime; else carIsCheckedOut">
+            <td>
+              <button class="btn btn-danger" (click)="checkOut(log.code)">
+                Check Out
+              </button>
+            </td>
+          </ng-container>
 
-        <td>
-          <button class="btn btn-light" [routerLink]="[log.code]">
-            View Details
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <ng-template #carIsCheckedOut>
+            <td>
+              <button class="btn btn-danger" disabled="true">
+                Checked Out
+              </button>
+            </td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div class="alert alert-success my-5" role="alert" *ngIf="isSuccessShown">
     Car Checked In
@@ -107,7 +109,13 @@
               formControlName="subscriptionId"
             />
           </div>
-          <button type="submit" class="btn btn-success mt-3">Add</button>
+          <button
+            type="submit"
+            class="btn btn-success mt-3"
+            data-bs-dismiss="modal"
+          >
+            Add
+          </button>
         </form>
       </div>
     </div>

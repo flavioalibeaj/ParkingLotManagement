@@ -1,38 +1,38 @@
-<ng-container *ngIf="subscriber">
+<ng-container *ngIf="subscription">
   <div class="container my-5 bg-3 text-center">
     <h1 class="margin">
-      {{ subscriber.firstName + " " + subscriber.lastName }}
+      {{ subscription.code }}
     </h1>
 
     <div class="row my-5 align-items-center">
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>idCardNumber</h3>
+        <h3>subscriberId</h3>
         <p>
-          {{ subscriber.idCardNumber }}
+          {{ subscription.subscriberId }}
         </p>
       </div>
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>email</h3>
+        <h3>price</h3>
         <p>
-          {{ subscriber.email }}
+          {{ subscription.price }}
         </p>
       </div>
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>phoneNumber</h3>
+        <h3>startDate</h3>
         <p>
-          {{ subscriber.phoneNumber }}
+          {{ subscription.startDate | date : "medium" }}
         </p>
       </div>
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>birthday</h3>
+        <h3>endDate</h3>
         <p>
-          {{ subscriber.birthday }}
+          {{ subscription.endDate | date : "medium" }}
         </p>
       </div>
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>plateNumber</h3>
+        <h3>discountValue</h3>
         <p>
-          {{ subscriber.plateNumber }}
+          {{ subscription.discountValue }}
         </p>
       </div>
     </div>

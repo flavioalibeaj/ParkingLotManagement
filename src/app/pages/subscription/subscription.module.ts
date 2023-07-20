@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { SubscriptionRoutingModule } from './subscription-routing.module';
 import { SubscriptionComponent } from './subscription.component';
+import { SingleSubComponent } from './single-sub/single-sub.component';
 
 
 @NgModule({
   declarations: [
-    SubscriptionComponent
+    SubscriptionComponent,
+    SingleSubComponent
   ],
   imports: [
     CommonModule,

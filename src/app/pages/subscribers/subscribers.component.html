@@ -8,34 +8,34 @@
     Add Subscriber
   </button>
 
-  <table class="table" *ngIf="allSubscribers; else noSubscribers">
-    <thead>
-      <tr>
-        <th scope="col">First Name</th>
-        <th scope="col">Last Name</th>
-        <th scope="col">Plate Number</th>
-        <th scope="col">View Details</th>
-        <th scope="col">Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let subscriber of allSubscribers">
-        <td>{{ subscriber.firstName }}</td>
-        <td>{{ subscriber.lastName }}</td>
-        <td>{{ subscriber.plateNumber }}</td>
-        <td>
-          <button class="btn btn-light" [routerLink]="[subscriber.id]">
-            View Details
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-danger" (click)="delete(subscriber.id)">
-            Delete
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table" *ngIf="allSubscribers; else noSubscribers">
+      <thead>
+        <tr>
+          <th scope="col">First Name</th>
+          <th scope="col">Plate Number</th>
+          <th scope="col">View Details</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let subscriber of allSubscribers">
+          <td>{{ subscriber.firstName }}</td>
+          <td>{{ subscriber.plateNumber }}</td>
+          <td>
+            <button class="btn btn-light" [routerLink]="[subscriber.id]">
+              View Details
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="delete(subscriber.id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <ng-template #noSubscribers>No Subscribers atm</ng-template>

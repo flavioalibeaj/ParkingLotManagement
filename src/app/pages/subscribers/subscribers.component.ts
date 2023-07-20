@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { findIndex } from 'rxjs';
 import { Subscriber } from 'src/app/models/subscriber';
 import { SearchService } from 'src/app/services/search/search.service';
 import { SubscriberService } from 'src/app/services/subscriber/subscriber.service';
@@ -13,6 +12,7 @@ import { SubscriberService } from 'src/app/services/subscriber/subscriber.servic
 export class SubscribersComponent implements OnInit {
 
   allSubscribers!: Subscriber[]
+  originalSubscribers!: Subscriber[]; // Store the original data
   createSubForm!: FormGroup
   searchTermRecieved!: string
 
@@ -44,6 +44,7 @@ export class SubscribersComponent implements OnInit {
     this.subscribersService.getAll().subscribe({
       next: (subscribers: Subscriber[]) => {
         this.allSubscribers = subscribers
+        this.originalSubscribers = subscribers
       },
       error: (err) => {
         throw err
@@ -65,7 +66,7 @@ export class SubscribersComponent implements OnInit {
   delete(id: number) {
     this.subscribersService.deleteSubscriber(id).subscribe({
       next: (value) => {
-        const index = this.allSubscribers.findIndex(subs => subs.id === id);
+        const index = this.allSubscribers.findIndex(subs => subs.id === value.id);
         this.allSubscribers.splice(index, 1)
       },
       error: (err) => {
@@ -76,17 +77,16 @@ export class SubscribersComponent implements OnInit {
 
   filterLogs() {
     if (this.searchTermRecieved) {
-      this.allSubscribers = this.allSubscribers.filter((sub) => {
-
-        const firstNameMatch = sub.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
-        const lastNameMatch = sub.lastName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
-        const idCardNumberMatch = sub.idCardNumber.toLowerCase() == this.searchTermRecieved.toLowerCase();
-        const emailMatch = sub.email.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+      this.allSubscribers = this.originalSubscribers.filter((sub) => {
+        const firstNameMatch = sub.firstName && sub.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+        const lastNameMatch = sub.lastName && sub.lastName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+        const idCardNumberMatch = sub.idCardNumber && sub.idCardNumber.toLowerCase() === this.searchTermRecieved.toLowerCase();
+        const emailMatch = sub.email && sub.email.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
 
         return firstNameMatch || lastNameMatch || idCardNumberMatch || emailMatch;
       });
     } else {
-      this.getAll();
+      this.allSubscribers = this.originalSubscribers.slice();
     }
   }
 

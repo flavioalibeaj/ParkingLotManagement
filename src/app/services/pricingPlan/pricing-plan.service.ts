@@ -12,9 +12,9 @@ export class PricingPlanService {
 
   getAll(): Observable<PricingPlan[]> {
     return this.http.get<PricingPlan[]>("https://localhost:7091/api/PricingPlan")
-      .pipe(
-        tap<PricingPlan[]>(value => console.log("All plans", value))
-      )
+    // .pipe(
+    //   tap<PricingPlan[]>(value => console.log("All plans", value))
+    // )
   }
 
   // getOne(type: string): Observable<PricingPlan> {
@@ -26,8 +26,8 @@ export class PricingPlanService {
 
   update(type: string, editedPlan: PricingPlan): Observable<PricingPlan> {
     return this.http.put<PricingPlan>(`https://localhost:7091/api/PricingPlan/${type}`, editedPlan)
-      .pipe(
-        tap<PricingPlan>(value => console.log("Updated plan", value))
-      )
+    // .pipe(
+    //   tap<PricingPlan>(value => console.log("Updated plan", value))
+    // )
   }
 }

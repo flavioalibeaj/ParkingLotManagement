@@ -28,23 +28,33 @@ export class PricingPlanComponent implements OnInit {
     this.pricingPlanService.getAll().subscribe({
       next: (plans: PricingPlan[]) => {
         this.pricingPlans = plans
-        console.log(this.pricingPlans)
       },
       error: (err) => {
-        console.log("Error", err)
+        throw err
       }
     })
   }
 
-  update(type: string) {
+  update(type: "weekend" | "weekday") {
     this.pricingPlanService.update(type, this.updateForm.value).subscribe({
       next: (updatedPlan: PricingPlan) => {
-        this.getAll()
+        const index = this.pricingPlans.findIndex(plan => plan.type === type)
+        this.pricingPlans[index] = updatedPlan
       },
       error: (err) => {
         throw err;
       }
     });
+  }
+
+  fillModal(plan: PricingPlan) {
+    const currectPlan = this.pricingPlans.find(pricingPlan => pricingPlan.type === plan.type)
+
+    this.updateForm.patchValue({
+      hourlyPricing: currectPlan?.hourlyPricing,
+      dailyPricing: currectPlan?.dailyPricing,
+      minimumHours: currectPlan?.minimumHours
+    })
   }
 
 }

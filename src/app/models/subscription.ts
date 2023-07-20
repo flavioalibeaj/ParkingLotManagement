@@ -9,7 +9,7 @@ export interface Subscription {
   price: number,
   discountValue: number,
   startDate: Date,
-  end_date: Date,
+  endDate: Date,
   isDeleted: boolean
   logs?: Logs
 }

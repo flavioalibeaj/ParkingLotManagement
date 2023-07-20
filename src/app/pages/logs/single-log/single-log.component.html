@@ -1,20 +1,44 @@
 <ng-container *ngIf="log">
-  <div class="container my-3 d-flex justify-content-around">
-    <div class="card py-3 my-3" style="width: 18rem">
-      <div class="card-body">
-        <h1 class="card-title py-3">{{ log.code | uppercase }}</h1>
-        <p class="card-text font-weight-normal">
-          Check In: {{ log.checkInTime }}
+  <div class="container my-5 bg-3 text-center">
+    <h1 class="margin">{{ log.code | uppercase }}</h1>
+
+    <div class="row my-5 align-items-center">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <h3>Check In</h3>
+        <p>
+          {{ log.checkInTime | date : "medium" }}
         </p>
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item font-weight-normal py-3">
-          Check Out: {{ log.checkOutTime }}
-        </li>
-        <li class="list-group-item font-weight-normal py-3">
-          Price: {{ log.price }}
-        </li>
-      </ul>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <h3>Check Out</h3>
+        <ng-container *ngIf="log.checkOutTime !== null; else carIsInside">
+          <p>
+            {{ log.checkOutTime }}
+          </p>
+        </ng-container>
+        <ng-template #carIsInside>
+          <p>Car Is Still Inside</p>
+        </ng-template>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <h3>Price</h3>
+        <ng-container *ngIf="log.checkOutTime !== null; else noPriceYet">
+          <p>
+            {{ log.price }}
+          </p>
+        </ng-container>
+        <ng-template #noPriceYet>Price Will Be Evaluated</ng-template>
+      </div>
+      <ng-container *ngIf="log.subscriptionId">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+          <div class="col-md-6">
+            <h3>Subscription Id</h3>
+            <p>
+              {{ log.subscriptionId }}
+            </p>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </div>
 </ng-container>

@@ -68,7 +68,7 @@ export class LogsComponent implements OnInit {
     }, 2500)
   }
 
-  updateLog(code: string) {
+  checkOut(code: string) {
     this.logService.updateLog(code, this.newLog.value).subscribe({
       next: (res) => {
         this.getAll()
@@ -90,25 +90,20 @@ export class LogsComponent implements OnInit {
   }
 
   filterLogs() {
-    if (this.searchTermRecieved) {
-      this.allLogs = this.allLogs.filter((log) => {
-        const codeMatch = log.code.toLowerCase() === this.searchTermRecieved.toLowerCase();
+    // if (this.searchTermRecieved) {
+    //   this.allLogs = this.originalLogs.filter((log) => {
+    //     const codeMatch = log.code && log.code.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+    //     if (log.subscription && log.subscription.subscriber) {
+    //       const subFNameMatch = log.subscription.subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+    //       const subLNameMatch = log.subscription.subscriber.lastName.toLowerCase() === this.searchTermRecieved.toLowerCase();
 
-        if (log.subscription && log.subscription.subscriber) {
-          const subFNameMatch = log.subscription.subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
-          const subLNameMatch = log.subscription.subscriber.lastName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
-
-          return codeMatch || subFNameMatch || subLNameMatch;
-        } else {
-          return codeMatch;
-        }
-      });
-    } else {
-      this.getAll();
-    }
+    //       return codeMatch || subFNameMatch || subLNameMatch;
+    //     } else {
+    //       return codeMatch
+    //     }
+    //   });
+    // } else {
+    //   this.allLogs = this.originalLogs.slice();
+    // }
   }
-
-
-
-
 }

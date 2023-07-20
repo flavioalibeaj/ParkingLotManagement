@@ -35,22 +35,30 @@ export class SubscriptionComponent implements OnInit {
   }
 
   filterLogs() {
-    if (this.searchTermRecieved) {
-      this.allSubscriptions = this.allSubscriptions.filter((sub) => {
+    // if (this.searchTermRecieved) {
+    //   this.allSubscriptions = this.allSubscriptions.filter((sub) => {
+    //     const codeMatch = sub.code.toLowerCase() == this.searchTermRecieved.toLowerCase();
+    //     const subFNameMatch = sub.subscriber && sub.subscriber.firstName && sub.subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+    //     const subLNameMatch = sub.subscriber && sub.subscriber.lastName && sub.subscriber.lastName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
 
-        const codeMatch = sub.code.toLowerCase() == this.searchTermRecieved.toLowerCase();
-        const subFNameMatch = sub.subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
-        const subLNameMatch = sub.subscriber.lastName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
-
-        return codeMatch || subFNameMatch || subLNameMatch;
-      });
-    } else {
-      this.getAll();
-    }
+    //     return codeMatch || subFNameMatch || subLNameMatch;
+    //   });
+    // } else {
+    //   this.getAll();
+    // }
   }
 
-  delete(param: any) {
 
+  delete(id: number) {
+    this.subscriptionService.delete(id).subscribe({
+      next: (deletedSub: Subscription) => {
+        const index = this.allSubscriptions.findIndex(sub => sub.id === deletedSub.id)
+        this.allSubscriptions.splice(index, 1)
+      },
+      error: (err) => {
+        throw err
+      }
+    })
   }
 
 }
