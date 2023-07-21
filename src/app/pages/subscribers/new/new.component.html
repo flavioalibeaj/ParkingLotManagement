@@ -1,67 +1,74 @@
-<form
-  [formGroup]="createSubForm"
-  class="d-flex justify-content-evenly flex-wrap"
-  (ngSubmit)="submitNewSub()"
->
-  <div class="mb-3">
-    <label for="FirstName" class="form-label">First Name</label>
-    <input type="text" class="form-control" formControlName="FirstName" />
-  </div>
-  <div class="mb-3">
-    <label for="LastName" class="form-label">Last Name</label>
-    <input type="text" class="form-control" formControlName="LastName" />
-  </div>
-  <div class="mb-3">
-    <label for="PhoneNumber" class="form-label">PhoneNumber</label>
-    <input type="text" class="form-control" formControlName="PhoneNumber" />
-  </div>
-  <div class="mb-3">
-    <label for="Email" class="form-label">Email</label>
-    <input type="email" class="form-control" formControlName="Email" />
-  </div>
-  <div class="mb-3">
-    <label for="IdCardNumber" class="form-label">IdCardNumber</label>
-    <input type="text" class="form-control" formControlName="IdCardNumber" />
-  </div>
-  <div class="mb-3">
-    <label for="PlateNumber" class="form-label">PlateNumber</label>
-    <input type="text" class="form-control" formControlName="PlateNumber" />
-  </div>
-  <div class="mb-3">
-    <label for="Birthday" class="form-label">Birthday</label>
-    <input type="date" class="form-control" formControlName="Birthday" />
-  </div>
+<div class="p-3 text-center rounded-3">
+  <h1 class="text-body-emphasis mb-5">Create Subscriber</h1>
 
-  <ng-container formGroupName="subscriptionForCreationDTO">
-    <div class="mb-3">
-      <label for="StartDate" class="form-label">StartDate</label>
-      <input type="date" class="form-control" formControlName="StartDate" />
+  <form
+    [formGroup]="createSubForm"
+    class="d-flex flex-row justify-content-around flex-wrap"
+    (ngSubmit)="submitNewSub()"
+  >
+    <div>
+      <div class="mb-3">
+        <label for="FirstName" class="form-label">First Name</label>
+        <input type="text" class="form-control" formControlName="FirstName" />
+      </div>
+      <div class="mb-3">
+        <label for="LastName" class="form-label">Last Name</label>
+        <input type="text" class="form-control" formControlName="LastName" />
+      </div>
+      <div class="mb-3">
+        <label for="PhoneNumber" class="form-label">PhoneNumber</label>
+        <input type="text" class="form-control" formControlName="PhoneNumber" />
+      </div>
+      <div class="mb-3">
+        <label for="Email" class="form-label">Email</label>
+        <input type="email" class="form-control" formControlName="Email" />
+      </div>
+      <div class="mb-3">
+        <label for="IdCardNumber" class="form-label">IdCardNumber</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="IdCardNumber"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="PlateNumber" class="form-label">PlateNumber</label>
+        <input type="text" class="form-control" formControlName="PlateNumber" />
+      </div>
+      <div class="mb-3">
+        <label for="Birthday" class="form-label">Birthday</label>
+        <input type="date" class="form-control" formControlName="Birthday" />
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="EndDate" class="form-label">EndDate</label>
-      <input type="date" class="form-control" formControlName="EndDate" />
-    </div>
-    <div class="mb-3">
-      <label for="DiscountValue" class="form-label">DiscountValue</label>
-      <input
-        type="number"
-        class="form-control"
-        formControlName="DiscountValue"
-      />
-    </div>
-  </ng-container>
 
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-      Close
-    </button>
-    <button
-      type="submit"
-      [disabled]="createSubForm.status === 'INVALID'"
-      class="btn btn-success"
-      data-bs-dismiss="modal"
-    >
-      Save
-    </button>
-  </div>
-</form>
+    <ng-container formGroupName="subscriptionForCreationDTO">
+      <div>
+        <h3 class="my-5">Subscription Details</h3>
+        <div class="mb-3">
+          <label for="StartDate" class="form-label">StartDate</label>
+          <input type="date" class="form-control" formControlName="StartDate" />
+        </div>
+        <div class="mb-3">
+          <label for="EndDate" class="form-label">EndDate</label>
+          <input type="date" class="form-control" formControlName="EndDate" />
+        </div>
+        <div class="mb-3">
+          <label for="DiscountValue" class="form-label">DiscountValue</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="DiscountValue"
+          />
+        </div>
+        <button
+          type="submit"
+          [disabled]="createSubForm.status === 'INVALID'"
+          class="btn btn-success"
+          data-bs-dismiss="modal"
+        >
+          Save
+        </button>
+      </div>
+    </ng-container>
+  </form>
+</div>

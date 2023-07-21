@@ -5,9 +5,9 @@ import { SingleSubscriberComponent } from './single-subscriber/single-subscriber
 import { NewComponent } from './new/new.component';
 
 const routes: Routes = [
+  { path: "new", component: NewComponent },
   { path: "", component: SubscribersComponent },
   { path: ":id", component: SingleSubscriberComponent },
-  { path: "new", component: NewComponent }
 ];
 
 @NgModule({

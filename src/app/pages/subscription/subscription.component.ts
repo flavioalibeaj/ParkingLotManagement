@@ -38,7 +38,7 @@ export class SubscriptionComponent implements OnInit {
         this.allSubscriptions = subscriptions
       },
       error: (err) => {
-        console.log("Error", err)
+        throw err
       }
     })
   }
@@ -46,7 +46,7 @@ export class SubscriptionComponent implements OnInit {
   createSubscription() {
     this.subscriptionService.create(this.addSub.value).subscribe({
       next: (createdSub: Subscription) => {
-        console.log("Created Subscription", createdSub)
+        this.allSubscriptions.push(createdSub)
       },
       error: (err) => {
         throw err

@@ -19,9 +19,9 @@ export class SubscriptionService {
 
   create(subscription: Subscription): Observable<Subscription> {
     return this.http.post<Subscription>("https://localhost:7091/api/Subscription", subscription)
-      .pipe(
-        tap<Subscription>(value => console.log("Created subscription", value))
-      )
+    // .pipe(
+    //   tap<Subscription>(value => console.log("Created subscription", value))
+    // )
   }
 
   getOne(id: number): Observable<Subscription> {
