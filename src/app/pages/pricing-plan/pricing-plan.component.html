@@ -1,107 +1,28 @@
-<div class="container my-3 d-flex justify-content-around">
-  <div
-    class="card py-3 my-3"
-    style="width: 18rem"
-    *ngFor="let plan of pricingPlans"
-  >
-    <div class="card-body">
-      <h1 class="card-title py-3">{{ plan.type | uppercase }}</h1>
-      <p class="card-text font-weight-normal">
-        Hourly Pricing: {{ plan.hourlyPricing }}
-      </p>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item font-weight-normal py-3">
-        Daily Pricing: {{ plan.dailyPricing }}
-      </li>
-      <li class="list-group-item font-weight-normal py-3">
-        Min Hours: {{ plan.minimumHours }}
-      </li>
-      <button
-        type="button"
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        [attr.data-bs-target]="'#exampleModal' + plan.type"
-        (click)="fillModal(plan)"
-      >
-        Update
-      </button>
-    </ul>
-
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      [id]="'exampleModal' + plan.type"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Update {{ plan.type }}
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form [formGroup]="updateForm" (ngSubmit)="update(plan.type)">
-              <div class="mb-3">
-                <label for="hourlyPricing" class="form-label"
-                  >hourlyPricing</label
-                >
-                <input
-                  type="number"
-                  class="form-control"
-                  formControlName="hourlyPricing"
-                />
-              </div>
-              <div class="mb-3">
-                <label for="dailyPricing" class="form-label"
-                  >dailyPricing</label
-                >
-                <input
-                  type="number"
-                  class="form-control"
-                  formControlName="dailyPricing"
-                />
-              </div>
-              <div class="mb-3">
-                <label for="minimumHours" class="form-label"
-                  >minimumHours</label
-                >
-                <input
-                  type="number"
-                  class="form-control"
-                  formControlName="minimumHours"
-                />
-              </div>
-
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button
-                  type="submit"
-                  class="btn btn-primary"
-                  data-bs-dismiss="modal"
-                >
-                  Update
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="container my-3">
+  <div class="table-responsive">
+    <table class="table" *ngIf="pricingPlans; else noPlans">
+      <thead>
+        <tr>
+          <th scope="col">Type</th>
+          <th scope="col">Hourly Pricing</th>
+          <th scope="col">Daily Pricing</th>
+          <th scope="col">Minimum Hours</th>
+          <th scope="col">Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let plan of pricingPlans">
+          <td>{{ plan.type | uppercase }}</td>
+          <td>{{ plan.hourlyPricing | currency : "EUR" }}</td>
+          <td>{{ plan.dailyPricing | currency : "EUR" }}</td>
+          <td>{{ plan.minimumHours }}</td>
+          <td>
+            <button class="btn btn-warning">Update</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
+
+<ng-template #noPlans>No Plans Currently</ng-template>

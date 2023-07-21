@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'src/app/models/subscription';
 import { SearchService } from 'src/app/services/search/search.service';
 import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
@@ -12,6 +13,7 @@ export class SubscriptionComponent implements OnInit {
 
   allSubscriptions!: Subscription[]
   searchTermRecieved!: string
+  addSub!: FormGroup
 
   constructor(private subscriptionService: SubscriptionService, private searchService: SearchService) { }
 
@@ -20,6 +22,13 @@ export class SubscriptionComponent implements OnInit {
     this.searchService.dataEmitter.subscribe(searchTerm => {
       this.searchTermRecieved = searchTerm
       this.filterLogs()
+    })
+
+    this.addSub = new FormGroup({
+      discountValue: new FormControl(null, Validators.required),
+      startDate: new FormControl(null, Validators.required),
+      endDate: new FormControl(null, Validators.required),
+      subscriberId: new FormControl(null, Validators.required)
     })
   }
 
@@ -30,6 +39,17 @@ export class SubscriptionComponent implements OnInit {
       },
       error: (err) => {
         console.log("Error", err)
+      }
+    })
+  }
+
+  createSubscription() {
+    this.subscriptionService.create(this.addSub.value).subscribe({
+      next: (createdSub: Subscription) => {
+        console.log("Created Subscription", createdSub)
+      },
+      error: (err) => {
+        throw err
       }
     })
   }

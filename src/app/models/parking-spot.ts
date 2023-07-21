@@ -1,5 +1,5 @@
 export interface ParkingSpot {
-  id: number,
+  id?: number,
   totalSpots: number
   freeRegularSpots: number
   freeReservedSpots: number

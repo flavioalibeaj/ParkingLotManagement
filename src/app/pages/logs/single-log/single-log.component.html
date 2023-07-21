@@ -1,6 +1,9 @@
 <ng-container *ngIf="log">
-  <div class="container my-5 bg-3 text-center">
-    <h1 class="margin">{{ log.code | uppercase }}</h1>
+  <div class="container my-3 bg-3 text-center">
+    <div class="d-flex flex-start">
+      <button class="btn btn-secondary" routerLink="../">Go Back</button>
+    </div>
+    <h1 class="margin">{{ log.code }}</h1>
 
     <div class="row my-5 align-items-center">
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -13,7 +16,7 @@
         <h3>Check Out</h3>
         <ng-container *ngIf="log.checkOutTime !== null; else carIsInside">
           <p>
-            {{ log.checkOutTime }}
+            {{ log.checkOutTime | date : "medium" }}
           </p>
         </ng-container>
         <ng-template #carIsInside>
@@ -24,10 +27,10 @@
         <h3>Price</h3>
         <ng-container *ngIf="log.checkOutTime !== null; else noPriceYet">
           <p>
-            {{ log.price }}
+            {{ log.price | currency : "EUR" }}
           </p>
         </ng-container>
-        <ng-template #noPriceYet>Price Will Be Evaluated</ng-template>
+        <ng-template #noPriceYet><p>Price Will Be Evaluated</p></ng-template>
       </div>
       <ng-container *ngIf="log.subscriptionId">
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">

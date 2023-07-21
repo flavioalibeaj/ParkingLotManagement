@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { SearchService } from '../services/search/search.service';
+import { SearchService } from '../../services/search/search.service';
 
 @Component({
   selector: 'app-navbar',

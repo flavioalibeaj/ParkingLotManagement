@@ -12,28 +12,13 @@ import { SubscriberService } from 'src/app/services/subscriber/subscriber.servic
 export class SubscribersComponent implements OnInit {
 
   allSubscribers!: Subscriber[]
-  originalSubscribers!: Subscriber[]; // Store the original data
-  createSubForm!: FormGroup
+  originalSubscribers!: Subscriber[]
   searchTermRecieved!: string
 
   constructor(private subscribersService: SubscriberService, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.getAll()
-    this.createSubForm = new FormGroup({
-      FirstName: new FormControl(null, Validators.required),
-      LastName: new FormControl(null, Validators.required),
-      PhoneNumber: new FormControl(null, Validators.required),
-      Email: new FormControl(null, [Validators.required, Validators.email]),
-      IdCardNumber: new FormControl(null, Validators.required),
-      PlateNumber: new FormControl(null, Validators.required),
-      Birthday: new FormControl(null, Validators.required),
-      subscriptionForCreationDTO: new FormGroup({
-        StartDate: new FormControl(null, Validators.required),
-        EndDate: new FormControl(null, Validators.required),
-        DiscountValue: new FormControl(null, Validators.required),
-      })
-    })
     this.searchService.dataEmitter.subscribe(searchTerm => {
       this.searchTermRecieved = searchTerm
       this.filterLogs()
@@ -45,17 +30,6 @@ export class SubscribersComponent implements OnInit {
       next: (subscribers: Subscriber[]) => {
         this.allSubscribers = subscribers
         this.originalSubscribers = subscribers
-      },
-      error: (err) => {
-        throw err
-      }
-    })
-  }
-
-  submitNewSub() {
-    this.subscribersService.create(this.createSubForm.value).subscribe({
-      next: (response: Subscriber) => {
-        this.allSubscribers.push(response)
       },
       error: (err) => {
         throw err

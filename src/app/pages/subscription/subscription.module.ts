@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SubscriptionRoutingModule } from './subscription-routing.module';
 import { SubscriptionComponent } from './subscription.component';
 import { SingleSubComponent } from './single-sub/single-sub.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { SingleSubComponent } from './single-sub/single-sub.component';
   ],
   imports: [
     CommonModule,
-    SubscriptionRoutingModule
+    SubscriptionRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class SubscriptionModule { }
