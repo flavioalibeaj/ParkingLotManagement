@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Logs } from 'src/app/models/logs';
+import { Subscription } from 'src/app/models/subscription';
 import { LogsService } from 'src/app/services/logs/logs.service';
 import { SearchService } from 'src/app/services/search/search.service';
+import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
 
 @Component({
   selector: 'app-logs',
@@ -16,10 +18,11 @@ export class LogsComponent implements OnInit {
   isDangerShown: boolean = false
   alertTimeout: any
   newLog!: FormGroup
+  subscriptionOptions: any
 
   searchTermRecieved!: string
 
-  constructor(private logService: LogsService, private searchService: SearchService) { }
+  constructor(private logService: LogsService, private searchService: SearchService, private subscriptionService: SubscriptionService) { }
 
   ngOnInit(): void {
     this.newLog = new FormGroup({
@@ -30,6 +33,7 @@ export class LogsComponent implements OnInit {
       this.searchTermRecieved = res;
       this.filterLogs()
     })
+    this.getAllSubscriptions()
   }
 
   getAll() {
@@ -45,11 +49,24 @@ export class LogsComponent implements OnInit {
       })
   }
 
+  getAllSubscriptions() {
+    this.subscriptionService.getAll().subscribe({
+      next: (subs: Subscription[]) => {
+        this.subscriptionOptions = subs
+        console.log("All subscriptions", subs)
+      },
+      error: (err) => {
+        throw err
+      }
+    })
+  }
+
   createLog() {
     this.logService.createLog(this.newLog.value).subscribe({
       next: (res) => {
         this.allLogs.unshift(res)
         this.successAlert()
+        this.newLog.reset()
       },
       error: (err) => {
         this.errorAlert()

@@ -9,7 +9,7 @@
   </button>
 
   <div class="table-responsive">
-    <table class="table" *ngIf="allLogs; else noLogs">
+    <table class="table table-hover" *ngIf="allLogs; else noLogs">
       <thead>
         <tr>
           <th scope="col">Code</th>
@@ -22,23 +22,6 @@
         <tr *ngFor="let log of allLogs">
           <td>{{ log.code }}</td>
           <td>{{ log.checkInTime | date : "medium" }}</td>
-
-          <!-- <ng-container *ngIf="log.checkOutTime !== null; else carIsInside">
-            <td>{{ log.checkOutTime | date : "medium" }}</td>
-          </ng-container>
-
-          <ng-template #carIsInside>
-            <td>Car is Inside</td>
-          </ng-template> -->
-
-          <!-- <ng-container *ngIf="log.checkOutTime !== null; else noPriceYet">
-            <td>{{ log.price | currency : "EUR" }}</td>
-          </ng-container>
-
-          <ng-template #noPriceYet>
-            <td>Price Will Be Evaluated</td>
-          </ng-template> -->
-
           <td>
             <button class="btn btn-light" [routerLink]="[log.code]">
               View Details
@@ -74,7 +57,7 @@
   </div>
 </div>
 
-<ng-template #noLogs>No Logs atm</ng-template>
+<ng-template #noLogs>No Logs</ng-template>
 
 <!-- Modal -->
 <div
@@ -101,14 +84,33 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="newLog" (ngSubmit)="createLog()">
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="subscriptionId">Subscription ID</label>
             <input
-              type="email"
+              type="number"
               class="form-control"
               formControlName="subscriptionId"
             />
-          </div>
+          </div> -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Subscription Id</mat-label>
+            <input
+              type="text"
+              placeholder="Pick one"
+              aria-label="subscriptionId"
+              matInput
+              formControlName="subscriptionId"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option
+                *ngFor="let option of subscriptionOptions"
+                [value]="option.id"
+              >
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
           <button
             type="submit"
             class="btn btn-success mt-3"

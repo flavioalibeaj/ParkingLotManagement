@@ -40,7 +40,7 @@ export class SubscribersComponent implements OnInit {
   delete(id: number) {
     this.subscribersService.deleteSubscriber(id).subscribe({
       next: (value) => {
-        const index = this.allSubscribers.findIndex(subs => subs.id === value.id);
+        const index = this.allSubscribers.findIndex(subs => subs.id === id);
         this.allSubscribers.splice(index, 1)
       },
       error: (err) => {

@@ -17,8 +17,93 @@
           <td>{{ plan.dailyPricing | currency : "EUR" }}</td>
           <td>{{ plan.minimumHours }}</td>
           <td>
-            <button class="btn btn-warning">Update</button>
+            <button
+              class="btn btn-warning"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="['#staticBackdrop' + plan.type]"
+              (click)="fillModal(plan)"
+            >
+              Update
+            </button>
           </td>
+
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            [id]="['staticBackdrop' + plan.type]"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="staticBackdropLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                    Update {{ plan.type }}
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form [formGroup]="updateForm" (ngSubmit)="update(plan.type)">
+                    <div class="mb-3">
+                      <label for="hourlyPricing" class="form-label"
+                        >Hourly Pricing</label
+                      >
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="hourlyPricing"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="dailyPricing" class="form-label"
+                        >Daily Pricing</label
+                      >
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="dailyPricing"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="minimumHours" class="form-label"
+                        >Minimum Hours</label
+                      >
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="minimumHours"
+                      />
+                    </div>
+
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </tr>
       </tbody>
     </table>
