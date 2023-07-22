@@ -1,0 +1,52 @@
+<div class="p-3 text-center rounded-3">
+  <h1 class="text-body-emphasis mb-5">Create Subscription</h1>
+
+  <form [formGroup]="addSub" (ngSubmit)="createSubscription()">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Discount Value</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="discountValue"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="startDate" class="form-label">Start Date</label>
+      <input type="date" class="form-control" formControlName="startDate" />
+    </div>
+    <div class="mb-3">
+      <label for="endDate" class="form-label">End Date</label>
+      <input type="date" class="form-control" formControlName="endDate" />
+    </div>
+    <!-- <div class="mb-3">
+      <label for="subscriberId" class="form-label">Subscriber Id</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="subscriberId"
+      />
+    </div> -->
+    <mat-form-field class="example-full-width">
+      <mat-label>Subscriber Id</mat-label>
+      <input
+        type="text"
+        placeholder="Pick one"
+        aria-label="subscriberId"
+        matInput
+        formControlName="subscriberId"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let option of optionSubscribers"
+          [value]="option.id"
+        >
+          {{ option.id }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+  </form>
+</div>

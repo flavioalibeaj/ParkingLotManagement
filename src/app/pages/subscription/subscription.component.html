@@ -1,10 +1,5 @@
 <div class="container my-3">
-  <button
-    type="button"
-    class="btn btn-info mb-3"
-    data-bs-toggle="modal"
-    data-bs-target="#staticBackdrop"
-  >
+  <button type="button" class="btn btn-info mb-3" routerLink="new">
     Add Subscription
   </button>
 
@@ -39,78 +34,3 @@
 </div>
 
 <ng-template #noSubscriptions>No Subscriptions atm</ng-template>
-
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="staticBackdrop"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="addSub" (ngSubmit)="createSubscription()">
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Discount Value</label
-            >
-            <input
-              type="number"
-              class="form-control"
-              formControlName="discountValue"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="startDate" class="form-label">Start Date</label>
-            <input
-              type="date"
-              class="form-control"
-              formControlName="startDate"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="endDate" class="form-label">End Date</label>
-            <input type="date" class="form-control" formControlName="endDate" />
-          </div>
-          <div class="mb-3">
-            <label for="subscriberId" class="form-label">Subscriber Id</label>
-            <input
-              type="number"
-              class="form-control"
-              formControlName="subscriberId"
-            />
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-            >
-              Create
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>

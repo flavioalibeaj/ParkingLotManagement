@@ -49,4 +49,11 @@ export class SubscriberService {
     //   tap<Subscriber>(value => console.log("Deleted sub", value))
     // )
   }
+
+  getSubscribersWithoutActiveSubscription(): Observable<Subscriber[]> {
+    return this.http.get<Subscriber[]>("https://localhost:7091/api/Subscriber/GetSubscribersWithNoActiveSubscriptions")
+      .pipe(
+        tap<Subscriber[]>(value => console.log("Value", value))
+      )
+  }
 }

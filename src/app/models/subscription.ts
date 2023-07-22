@@ -11,5 +11,5 @@ export interface Subscription {
   startDate: Date,
   endDate: Date,
   isDeleted: boolean
-  logs?: Logs
+  logs: Logs
 }

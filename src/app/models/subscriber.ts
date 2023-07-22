@@ -10,5 +10,5 @@ export interface Subscriber {
   birthday: Date | string,
   plateNumber: string,
   isDeleted: boolean,
-  subscription: Subscription
+  subscription: Subscription | Subscription[]
 }

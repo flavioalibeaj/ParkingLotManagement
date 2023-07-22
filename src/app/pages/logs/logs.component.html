@@ -1,12 +1,49 @@
 <div class="container my-3">
-  <button
-    type="submit"
-    class="btn btn-info mb-3"
-    data-bs-toggle="modal"
-    data-bs-target="#staticBackdrop"
-  >
-    Check In
-  </button>
+  <div class="d-flex justify-content-around">
+    <button
+      type="submit"
+      class="btn btn-info mb-3"
+      (click)="logCreationMode = true"
+      *ngIf="!logCreationMode"
+    >
+      Check In
+    </button>
+
+    <ng-container *ngIf="logCreationMode">
+      <form
+        [formGroup]="newLog"
+        (ngSubmit)="createLog(); logCreationMode = false"
+      >
+        <mat-form-field class="example-full-width">
+          <mat-label>Subscription Id</mat-label>
+          <input
+            type="text"
+            placeholder="Pick one"
+            aria-label="subscriptionId"
+            matInput
+            formControlName="subscriptionId"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let option of subscriptionOptions"
+              [value]="option.id"
+            >
+              {{ option.id }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <button type="submit" class="btn btn-success mx-3">Add Log</button>
+        <button
+          type="button"
+          class="btn btn-secondary mx-3"
+          (click)="logCreationMode = false"
+        >
+          Cancel
+        </button>
+      </form>
+    </ng-container>
+  </div>
 
   <div class="table-responsive">
     <table class="table table-hover" *ngIf="allLogs; else noLogs">
@@ -58,68 +95,3 @@
 </div>
 
 <ng-template #noLogs>No Logs</ng-template>
-
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="staticBackdrop"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">
-          Add Subscriber
-        </h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="newLog" (ngSubmit)="createLog()">
-          <!-- <div class="form-group">
-            <label for="subscriptionId">Subscription ID</label>
-            <input
-              type="number"
-              class="form-control"
-              formControlName="subscriptionId"
-            />
-          </div> -->
-          <mat-form-field class="example-full-width">
-            <mat-label>Subscription Id</mat-label>
-            <input
-              type="text"
-              placeholder="Pick one"
-              aria-label="subscriptionId"
-              matInput
-              formControlName="subscriptionId"
-              [matAutocomplete]="auto"
-            />
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option
-                *ngFor="let option of subscriptionOptions"
-                [value]="option.id"
-              >
-                {{ option }}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-          <button
-            type="submit"
-            class="btn btn-success mt-3"
-            data-bs-dismiss="modal"
-          >
-            Add
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>

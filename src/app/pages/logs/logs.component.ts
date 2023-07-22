@@ -18,8 +18,8 @@ export class LogsComponent implements OnInit {
   isDangerShown: boolean = false
   alertTimeout: any
   newLog!: FormGroup
-  subscriptionOptions: any
-
+  subscriptionOptions!: Subscription[]
+  logCreationMode: boolean = false
   searchTermRecieved!: string
 
   constructor(private logService: LogsService, private searchService: SearchService, private subscriptionService: SubscriptionService) { }
@@ -33,7 +33,7 @@ export class LogsComponent implements OnInit {
       this.searchTermRecieved = res;
       this.filterLogs()
     })
-    this.getAllSubscriptions()
+    this.getSubscriptionsWithoutActiveLogs()
   }
 
   getAll() {
@@ -49,11 +49,10 @@ export class LogsComponent implements OnInit {
       })
   }
 
-  getAllSubscriptions() {
-    this.subscriptionService.getAll().subscribe({
+  getSubscriptionsWithoutActiveLogs() {
+    this.subscriptionService.getSubscriptionsWithoutActiveLogs().subscribe({
       next: (subs: Subscription[]) => {
         this.subscriptionOptions = subs
-        console.log("All subscriptions", subs)
       },
       error: (err) => {
         throw err

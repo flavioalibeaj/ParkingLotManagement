@@ -37,4 +37,11 @@ export class SubscriptionService {
     //   tap<Subscription>(value => console.log("Deleted subscription", value))
     // )
   }
+
+  getSubscriptionsWithoutActiveLogs(): Observable<Subscription[]> {
+    return this.http.get<Subscription[]>("https://localhost:7091/api/Subscription/GetSubscriptionsWithNoActiveLogs")
+    // .pipe(
+    //   tap<Subscription[]>(value => console.log("Value", value))
+    // )
+  }
 }

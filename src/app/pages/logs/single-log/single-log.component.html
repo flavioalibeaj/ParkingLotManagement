@@ -5,14 +5,16 @@
     </div>
     <h1 class="margin">{{ log.code }}</h1>
 
-    <div class="row my-5 align-items-center">
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <div
+      class="container d-flex flex-column flex-start my-5 align-items-center"
+    >
+      <div>
         <h3>Check In</h3>
         <p>
           {{ log.checkInTime | date : "medium" }}
         </p>
       </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div>
         <h3>Check Out</h3>
         <ng-container *ngIf="log.checkOutTime !== null; else carIsInside">
           <p>
@@ -23,7 +25,7 @@
           <p>Car Is Still Inside</p>
         </ng-template>
       </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div>
         <h3>Price</h3>
         <ng-container *ngIf="log.checkOutTime !== null; else noPriceYet">
           <p>
@@ -33,8 +35,8 @@
         <ng-template #noPriceYet><p>Price Will Be Evaluated</p></ng-template>
       </div>
       <ng-container *ngIf="log.subscriptionId">
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-          <div class="col-md-6">
+        <div>
+          <div>
             <h3>Subscription Id</h3>
             <p>
               {{ log.subscriptionId }}
