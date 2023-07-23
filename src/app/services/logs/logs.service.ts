@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, catchError, tap } from 'rxjs';
 import { Logs } from 'src/app/models/logs';
 
 @Injectable({
@@ -12,9 +12,12 @@ export class LogsService {
 
   getAllLogs(): Observable<Logs[]> {
     return this.http.get<Logs[]>("https://localhost:7091/api/Logs")
-    // .pipe(
-    //   tap<Logs[]>(value => console.log("All logs", value))
-    // )
+      .pipe(
+        // tap<Logs[]>(value => console.log("All logs", value)),
+        catchError(err => {
+          throw err
+        })
+      )
   }
 
   createLog(log: Logs): Observable<Logs> {
@@ -24,24 +27,34 @@ export class LogsService {
     });
 
     return this.http.post<Logs>("https://localhost:7091/api/Logs", log, { headers })
-    // .pipe(
-    //   tap<Logs>(value => console.log("Created log", value))
-    // )
+      .pipe(
+        // tap<Logs>(value => console.log("Created log", value)),
+        catchError(err => {
+          throw err
+        })
+      )
   }
 
   getOne(code: string): Observable<Logs> {
     const params = new HttpParams().set("searchquery", code)
 
     return this.http.get<Logs>(`https://localhost:7091/api/Logs/code/${code}`, { params })
-    // .pipe(
-    //   tap<Logs>(value => console.log("Single log", value))
-    // )
+      .pipe(
+        // tap<Logs>(value => console.log("Single log", value)),
+        catchError(err => {
+          console.log("error")
+          throw err
+        })
+      )
   }
 
   updateLog(code: string, editedLog: Logs): Observable<Logs> {
     return this.http.put<Logs>(`https://localhost:7091/api/Logs/${code}`, editedLog)
-    // .pipe(
-    //   tap<Logs>(value => console.log("Updated log", value))
-    // )
+      .pipe(
+        // tap<Logs>(value => console.log("Updated log", value)),
+        catchError(err => {
+          throw err
+        })
+      )
   }
 }

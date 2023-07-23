@@ -1,0 +1,129 @@
+<ng-container *ngIf="pricingPlan">
+  <div class="container my-3 bg-3">
+    <div class="d-flex flex-start">
+      <button class="btn btn-secondary" routerLink="../">Go Back</button>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <h1 class="border-bottom border-dark mb-5 mt-4">
+        {{ pricingPlan.type | uppercase }}
+      </h1>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+        <div class="d-flex justify-content-center">
+          <h2 class="border-bottom border-info pb-3">Information</h2>
+        </div>
+        <div
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <h4>Hourly Pricing</h4>
+            <p>
+              {{ pricingPlan.hourlyPricing }}
+            </p>
+          </div>
+          <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <h4>Daily Pricing</h4>
+            <p>
+              {{ pricingPlan.dailyPricing }}
+            </p>
+          </div>
+          <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <h4>Minimum Hours</h4>
+            <p>
+              {{ pricingPlan.minimumHours }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+        <div class="d-flex flex-column">
+          <div class="d-flex justify-content-center">
+            <button
+              type="button"
+              (click)="editMode = true; fillModal()"
+              class="btn btn-warning"
+              *ngIf="!editMode"
+            >
+              Update
+            </button>
+          </div>
+          <form
+            *ngIf="editMode"
+            [formGroup]="updateForm"
+            class="d-flex flex-row justify-content-around flex-wrap"
+            (ngSubmit)="update(); editMode = false"
+          >
+            <div>
+              <div class="mb-3">
+                <label for="hourlyPricing" class="form-label"
+                  >Hourly Pricing</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="hourlyPricing"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="dailyPricing" class="form-label"
+                  >Daily Pricing</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="dailyPricing"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="minimumHours" class="form-label"
+                  >Minimum Hours</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="minimumHours"
+                />
+              </div>
+              <div class="mb-3 d-flex justify-content-evenly">
+                <button
+                  class="btn btn-secondary"
+                  type="button"
+                  (click)="editMode = false"
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-success"
+                  [disabled]="updateForm.status === 'INVALID'"
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- <div
+  class="alert alert-success my-5 position-fixed top-0 start-0"
+  role="alert"
+  *ngIf="isSuccessShown"
+>
+  {{ successMessage }}
+</div>
+
+<div
+  class="alert alert-danger my-5 position-fixed top-0 start-0"
+  role="alert"
+  *ngIf="isDangerShown"
+>
+  {{ errorMessage }}
+</div> -->

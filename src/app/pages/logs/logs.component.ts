@@ -47,6 +47,7 @@ export class LogsComponent implements OnInit {
           this.originalLogs = logs.reverse()
         },
         error: (err) => {
+          console.log("Error Retrieving All Logs", err)
           this.errorMessage = err
           this.errorAlert(this.errorMessage)
           // throw err
@@ -60,6 +61,7 @@ export class LogsComponent implements OnInit {
         this.subscriptionOptions = subs
       },
       error: (err) => {
+        console.log("Error Getting Subscriptions Without Active Logs", err)
         this.errorMessage = err
         this.errorAlert(this.errorMessage)
         // throw err
@@ -76,6 +78,7 @@ export class LogsComponent implements OnInit {
         this.newLog.reset()
       },
       error: (err) => {
+        console.log("Error Creating Log", err)
         this.errorMessage = err
         this.errorAlert(this.errorMessage)
         // throw err
@@ -101,6 +104,7 @@ export class LogsComponent implements OnInit {
         this.getAll()
       },
       error: (err) => {
+        console.log("Error Checking Out", err)
         this.errorMessage = err
         this.errorAlert(this.errorMessage)
         // throw err

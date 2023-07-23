@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscriber } from 'src/app/models/subscriber';
 import { SearchService } from 'src/app/services/search/search.service';
 import { SubscriberService } from 'src/app/services/subscriber/subscriber.service';
@@ -32,7 +31,8 @@ export class SubscribersComponent implements OnInit {
         this.originalSubscribers = subscribers
       },
       error: (err) => {
-        throw err
+        console.log("Error Retrieving Subscribers", err)
+        // throw err
       }
     })
   }

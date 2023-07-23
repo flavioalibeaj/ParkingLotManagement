@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, catchError, tap } from 'rxjs';
 import { ParkingSpot } from '../../models/parking-spot';
 
 @Injectable({
@@ -12,9 +12,12 @@ export class ParkingSpotService {
 
   getAllSpots(): Observable<ParkingSpot> {
     return this.http.get<ParkingSpot>("https://localhost:7091/api/ParkingSpot")
-    // .pipe(
-    //   tap<ParkingSpot>(value => console.log("All Spots", value))
-    // )
+      .pipe(
+        // tap<ParkingSpot>(value => console.log("All Spots", value))
+        catchError(err => {
+          throw err
+        })
+      )
   }
 
   // updateSpot(id: number, editedSpot: ParkingSpot): Observable<ParkingSpot> {

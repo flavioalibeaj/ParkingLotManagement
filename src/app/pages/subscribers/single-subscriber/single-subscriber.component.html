@@ -1,43 +1,127 @@
 <ng-container *ngIf="subscriber">
-  <div class="container my-3 bg-3 text-center">
+  <div class="container my-3 bg-3">
     <div class="d-flex flex-start">
       <button class="btn btn-secondary" routerLink="../">Go Back</button>
     </div>
-    <h1 class="margin">
-      {{ subscriber.firstName + " " + subscriber.lastName }}
-    </h1>
 
-    <div class="row my-5 align-items-center">
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>Id Card Number</h3>
-        <p>
-          {{ subscriber.idCardNumber }}
-        </p>
+    <div class="d-flex justify-content-center">
+      <h1 class="border-bottom border-dark mb-5 mt-4">
+        {{ subscriber.firstName + " " + subscriber.lastName }}
+      </h1>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+        <div class="d-flex justify-content-center">
+          <h2 class="border-bottom border-info pb-3">Subscriber Information</h2>
+        </div>
+        <div
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <h4>Id Card Number</h4>
+            <p>
+              {{ subscriber.idCardNumber }}
+            </p>
+          </div>
+          <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <h4>Plate Number</h4>
+            <p>
+              {{ subscriber.plateNumber }}
+            </p>
+          </div>
+          <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <h4>Email</h4>
+            <p>
+              {{ subscriber.email }}
+            </p>
+          </div>
+          <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <h4>Phone Number</h4>
+            <p>
+              {{ subscriber.phoneNumber }}
+            </p>
+          </div>
+          <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <h4>Birthday</h4>
+            <p>
+              {{ subscriber.birthday }}
+            </p>
+          </div>
+        </div>
       </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>Email</h3>
-        <p>
-          {{ subscriber.email }}
-        </p>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>Phone Number</h3>
-        <p>
-          {{ subscriber.phoneNumber }}
-        </p>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>Birthday</h3>
-        <p>
-          {{ subscriber.birthday }}
-        </p>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>Plate Number</h3>
-        <p>
-          {{ subscriber.plateNumber }}
-        </p>
+
+      <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+        <div class="d-flex flex-column">
+          <div class="d-flex justify-content-center">
+            <h2
+              [ngClass]="
+                subscriber.subscription
+                  ? ''
+                  : 'border-bottom border-warning pb-3'
+              "
+            >
+              Subscription Information
+            </h2>
+          </div>
+
+          <div
+            *ngIf="subscriber.subscription"
+            class="d-flex justify-content-center border-bottom border-warning pb-3"
+          >
+            <button
+              class="btn btn-warning"
+              (click)="navigate(subscriber.subscription.id)"
+            >
+              See More
+            </button>
+          </div>
+        </div>
+        <ng-container *ngIf="subscriber.subscription; else noSubscription">
+          <div class="d-flex flex-start flex-column">
+            <div class="px-5 py-3">
+              <h4>Subscription Id</h4>
+              <p>
+                {{ subscriber.subscription.id }}
+              </p>
+            </div>
+            <div class="px-5 py-3">
+              <h4>Code</h4>
+              <p>
+                {{ subscriber.subscription.code }}
+              </p>
+            </div>
+            <div class="px-5 py-3">
+              <h4>End Date</h4>
+              <p>
+                {{ subscriber.subscription.endDate }}
+              </p>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>
 </ng-container>
+
+<ng-template #noSubscription>
+  <div class="d-flex justify-content-center p-3">
+    <p>No subscription Available</p>
+  </div>
+</ng-template>
+
+<div
+  class="alert alert-success my-5 position-fixed top-0 start-0"
+  role="alert"
+  *ngIf="isSuccessShown"
+>
+  {{ successMessage }}
+</div>
+
+<div
+  class="alert alert-danger my-5 position-fixed top-0 start-0"
+  role="alert"
+  *ngIf="isDangerShown"
+>
+  {{ errorMessage }}
+</div>
