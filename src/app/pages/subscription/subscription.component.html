@@ -4,7 +4,10 @@
   </button>
 
   <div class="table-responsive">
-    <table class="table" *ngIf="allSubscriptions; else noSubscriptions">
+    <table
+      class="table table-hover"
+      *ngIf="allSubscriptions; else noSubscriptions"
+    >
       <thead>
         <tr>
           <th scope="col">Code</th>

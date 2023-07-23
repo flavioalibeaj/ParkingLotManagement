@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscriber } from 'src/app/models/subscriber';
 import { Subscription } from 'src/app/models/subscription';
 import { SearchService } from 'src/app/services/search/search.service';
-import { SubscriberService } from 'src/app/services/subscriber/subscriber.service';
 import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
 
 @Component({
@@ -13,15 +11,13 @@ import { SubscriptionService } from 'src/app/services/subscription/subscription.
 export class SubscriptionComponent implements OnInit {
 
   allSubscriptions!: Subscription[]
-  // allSubscribers!: Subscriber[]
   originalSubscriptions!: Subscription[]
   searchTermRecieved!: string
 
-  constructor(private subscriptionService: SubscriptionService, private searchService: SearchService, private subscriberService: SubscriberService) { }
+  constructor(private subscriptionService: SubscriptionService, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.getAll()
-    // this.getAllSubscribers()
     this.searchService.dataEmitter.subscribe(searchTerm => {
       this.searchTermRecieved = searchTerm
       this.filterLogs()
@@ -40,28 +36,12 @@ export class SubscriptionComponent implements OnInit {
     })
   }
 
-  // getAllSubscribers() {
-  //   this.subscriberService.getAll().subscribe({
-  //     next: (subscribers: Subscriber[]) => {
-  //       this.allSubscribers = subscribers
-  //     }
-  //   })
-  // }
-
   filterLogs() {
     if (this.searchTermRecieved) {
       this.allSubscriptions = this.originalSubscriptions.filter((sub) => {
-        const codeMatch = sub.code && sub.code.toLowerCase() === this.searchTermRecieved.toLowerCase();
-        // const subFNameMatch = this.allSubscribers.find(subscriber => subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase()))
-        // const subLNameMatch = this.allSubscribers.find(subscriber => subscriber.lastName.toLowerCase().includes(this.searchTermRecieved.toLowerCase()))
-
+        const codeMatch = sub.code.toLowerCase() === this.searchTermRecieved.toLowerCase();
         const subFNameMatch = sub.subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase())
         const subLNameMatch = sub.subscriber.lastName.toLowerCase().includes(this.searchTermRecieved.toLowerCase())
-
-
-        console.log("Code Match", codeMatch)
-        console.log("First Name Match", subFNameMatch)
-        console.log("Last Name Match", subLNameMatch)
 
         return codeMatch || subFNameMatch || subLNameMatch
       });

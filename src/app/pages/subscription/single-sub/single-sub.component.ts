@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'src/app/models/subscription';
 import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
 
@@ -13,7 +13,7 @@ export class SingleSubComponent implements OnInit {
   subId!: number
   subscription!: Subscription
 
-  constructor(private subscriptionService: SubscriptionService, private activeRoute: ActivatedRoute) { }
+  constructor(private subscriptionService: SubscriptionService, private activeRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.activeRoute.params.subscribe(params => {
@@ -31,6 +31,10 @@ export class SingleSubComponent implements OnInit {
         throw err
       }
     })
+  }
+
+  navigateTo(id: number) {
+    this.router.navigate([`subscribers/${id}`])
   }
 
 }

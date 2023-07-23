@@ -14,6 +14,7 @@ import { SubscriptionService } from 'src/app/services/subscription/subscription.
 export class LogsComponent implements OnInit {
 
   allLogs!: Logs[]
+  originalLogs!: Logs[]
   isSuccessShown: boolean = false
   isDangerShown: boolean = false
   alertTimeout: any
@@ -21,6 +22,8 @@ export class LogsComponent implements OnInit {
   subscriptionOptions!: Subscription[]
   logCreationMode: boolean = false
   searchTermRecieved!: string
+  errorMessage?: string
+  successMessage?: string
 
   constructor(private logService: LogsService, private searchService: SearchService, private subscriptionService: SubscriptionService) { }
 
@@ -40,11 +43,13 @@ export class LogsComponent implements OnInit {
     this.logService.getAllLogs()
       .subscribe({
         next: (logs: Logs[]) => {
-          this.allLogs = logs.reverse()
+          this.allLogs = logs
+          this.originalLogs = logs.reverse()
         },
         error: (err) => {
-          this.errorAlert()
-          throw err
+          this.errorMessage = err
+          this.errorAlert(this.errorMessage)
+          // throw err
         }
       })
   }
@@ -55,7 +60,9 @@ export class LogsComponent implements OnInit {
         this.subscriptionOptions = subs
       },
       error: (err) => {
-        throw err
+        this.errorMessage = err
+        this.errorAlert(this.errorMessage)
+        // throw err
       }
     })
   }
@@ -64,17 +71,19 @@ export class LogsComponent implements OnInit {
     this.logService.createLog(this.newLog.value).subscribe({
       next: (res) => {
         this.allLogs.unshift(res)
-        this.successAlert()
+        this.successMessage = "Created Log Succesfully"
+        this.successAlert(this.successMessage)
         this.newLog.reset()
       },
       error: (err) => {
-        this.errorAlert()
-        throw err
+        this.errorMessage = err
+        this.errorAlert(this.errorMessage)
+        // throw err
       }
     })
   }
 
-  successAlert() {
+  successAlert(success?: string) {
     this.isSuccessShown = true
 
     clearTimeout(this.alertTimeout);
@@ -87,16 +96,19 @@ export class LogsComponent implements OnInit {
   checkOut(code: string) {
     this.logService.updateLog(code, this.newLog.value).subscribe({
       next: (res) => {
+        this.successMessage = `Checked ${code} Out`
+        this.successAlert(this.successMessage)
         this.getAll()
       },
       error: (err) => {
-        this.errorAlert()
-        throw err
+        this.errorMessage = err
+        this.errorAlert(this.errorMessage)
+        // throw err
       }
     })
   }
 
-  errorAlert() {
+  errorAlert(err?: string) {
     this.isDangerShown = true;
     clearTimeout(this.alertTimeout);
 
@@ -106,20 +118,16 @@ export class LogsComponent implements OnInit {
   }
 
   filterLogs() {
-    // if (this.searchTermRecieved) {
-    //   this.allLogs = this.originalLogs.filter((log) => {
-    //     const codeMatch = log.code && log.code.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
-    //     if (log.subscription && log.subscription.subscriber) {
-    //       const subFNameMatch = log.subscription.subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
-    //       const subLNameMatch = log.subscription.subscriber.lastName.toLowerCase() === this.searchTermRecieved.toLowerCase();
+    if (this.searchTermRecieved) {
+      this.allLogs = this.originalLogs.filter((log) => {
+        const codeMatch = log.code.toLowerCase() === this.searchTermRecieved.toLowerCase();
+        const subFNameMatch = log.subscription.subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+        const subLNameMatch = log.subscription.subscriber.lastName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
 
-    //       return codeMatch || subFNameMatch || subLNameMatch;
-    //     } else {
-    //       return codeMatch
-    //     }
-    //   });
-    // } else {
-    //   this.allLogs = this.originalLogs.slice();
-    // }
+        return codeMatch || subFNameMatch || subLNameMatch;
+      });
+    } else {
+      this.allLogs = this.originalLogs.slice()
+    }
   }
 }

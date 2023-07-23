@@ -1,39 +1,37 @@
 <ng-container *ngIf="allSpots">
   <div class="container pb-3">
     <div class="py-3 d-flex flex-wrap gap-3 justify-content-evenly">
-      <div class="text">
-        <h4>{{ "Total spots:" + allSpots.totalSpots | uppercase }}</h4>
-      </div>
-      <div class="text">
-        <h4>
+      <div class="d-flex flex-column">
+        <p class="text-dark">
+          {{ "Total spots:" + allSpots.totalSpots | uppercase }}
+        </p>
+        <p class="text-dark">
+          {{ "Total regular spots:" + allSpots.regularSpots | uppercase }}
+        </p>
+        <p class="text-dark">
           {{ "total reserved Spots: " + allSpots.reservedSpots | uppercase }}
-        </h4>
+        </p>
       </div>
-      <div class="text-success">
-        <h4>
+
+      <div class="d-flex flex-column">
+        <p class="text-success">
           {{ "free Regular Spots :" + allSpots.freeRegularSpots | uppercase }}
-        </h4>
-      </div>
-      <div class="text-danger">
-        <h4>
+        </p>
+        <p class="text-danger">
           {{
             "occupied Regular Spots: " + allSpots.occupiedRegularSpots
               | uppercase
           }}
-        </h4>
-      </div>
-      <div class="text-info">
-        <h4>
+        </p>
+        <p class="text-info">
           {{ "free Reserved Spots: " + allSpots.freeReservedSpots | uppercase }}
-        </h4>
-      </div>
-      <div class="text-warning">
-        <h4>
+        </p>
+        <p class="text-warning">
           {{
             "occupied Reserved Spots: " + allSpots.occupiedReservedSpots
               | uppercase
           }}
-        </h4>
+        </p>
       </div>
     </div>
     <div class="py-3 d-flex flex-row flex-wrap gap-4" *ngIf="allSpots">

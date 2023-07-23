@@ -84,14 +84,22 @@
       </tbody>
     </table>
   </div>
+</div>
 
-  <div class="alert alert-success my-5" role="alert" *ngIf="isSuccessShown">
-    Car Checked In
-  </div>
+<div
+  class="alert alert-success my-5 position-fixed top-0 start-0"
+  role="alert"
+  *ngIf="isSuccessShown"
+>
+  {{ successMessage }}
+</div>
 
-  <div class="alert alert-danger my-5" role="alert" *ngIf="isDangerShown">
-    Error
-  </div>
+<div
+  class="alert alert-danger my-5 position-fixed top-0 start-0"
+  role="alert"
+  *ngIf="isDangerShown"
+>
+  {{ errorMessage }}
 </div>
 
 <ng-template #noLogs>No Logs</ng-template>
