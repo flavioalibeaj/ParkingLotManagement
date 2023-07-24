@@ -4,12 +4,15 @@ import { ParkingSpotService } from 'src/app/services/parkingSpot/parking-spot.se
 
 @Component({
   selector: 'app-parking-spot',
-  templateUrl: './parking-spot.component.html',
-  styleUrls: ['./parking-spot.component.css']
+  templateUrl: './parking-spot.component.html'
 })
 export class ParkingSpotComponent implements OnInit {
 
   allSpots!: ParkingSpot
+  isDangerShown: boolean = false
+  errorMessage?: string
+  alertTimeout: any
+
 
   constructor(private parkingSpotService: ParkingSpotService) { }
 
@@ -23,7 +26,8 @@ export class ParkingSpotComponent implements OnInit {
         this.allSpots = spots
       },
       error: (err) => {
-        console.log("Error", err)
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
       }
     })
   }
@@ -61,6 +65,15 @@ export class ParkingSpotComponent implements OnInit {
     } else {
       return '';
     }
+  }
+
+  errorAlert(err?: string) {
+    this.isDangerShown = true;
+    clearTimeout(this.alertTimeout);
+
+    this.alertTimeout = setTimeout(() => {
+      this.isDangerShown = false
+    }, 3000)
   }
 
 }

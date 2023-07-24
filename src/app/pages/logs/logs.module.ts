@@ -9,6 +9,9 @@ import { SingleLogComponent } from './single-log/single-log.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+// import { MatDialogModule } from '@angular/material/dialog';
+// import { ModalComponent } from './modal/modal.component';
+
 
 
 
@@ -18,6 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   declarations: [
     LogsComponent,
     SingleLogComponent,
+    // ModalComponent,
   ],
   imports: [
     CommonModule,
@@ -25,7 +29,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    // MatDialogModule
   ]
 })
 export class LogsModule { }

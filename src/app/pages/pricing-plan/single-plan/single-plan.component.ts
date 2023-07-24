@@ -1,22 +1,24 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PricingPlan } from 'src/app/models/pricing-plan';
 import { PricingPlanService } from 'src/app/services/pricingPlan/pricing-plan.service';
-import { Subscription } from "rxjs"
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-single-plan',
-  templateUrl: './single-plan.component.html',
-  styleUrls: ['./single-plan.component.css']
+  templateUrl: './single-plan.component.html'
 })
-export class SinglePlanComponent implements OnInit, OnDestroy {
+export class SinglePlanComponent implements OnInit {
 
   type!: string
   pricingPlan!: PricingPlan
-  pricingPlanSubscription!: Subscription
   updateForm!: FormGroup
   editMode: boolean = false
+  isSuccessShown: boolean = false
+  isDangerShown: boolean = false
+  errorMessage?: string
+  successMessage?: string
+  alertTimeout: any
 
 
   constructor(private activeRoute: ActivatedRoute, private pricingPlanService: PricingPlanService) { }
@@ -33,13 +35,15 @@ export class SinglePlanComponent implements OnInit, OnDestroy {
     })
   }
 
+
   getOne() {
-    this.pricingPlanSubscription = this.pricingPlanService.getOne(this.type).subscribe({
+    this.pricingPlanService.getOne(this.type).subscribe({
       next: (pricingPlan: PricingPlan) => {
         this.pricingPlan = pricingPlan
       },
       error: (err) => {
-        console.log("Error Retrieving Pricing Plan", err)
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
       }
     })
   }
@@ -50,14 +54,10 @@ export class SinglePlanComponent implements OnInit, OnDestroy {
         this.pricingPlan = updatedPlan
       },
       error: (err) => {
-        throw err;
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
       }
     });
-    console.log(this.updateForm.value)
-  }
-
-  ngOnDestroy() {
-    this.pricingPlanSubscription.unsubscribe()
   }
 
   fillModal() {
@@ -66,6 +66,26 @@ export class SinglePlanComponent implements OnInit, OnDestroy {
       dailyPricing: this.pricingPlan.dailyPricing,
       minimumHours: this.pricingPlan.minimumHours
     })
+  }
+
+
+  errorAlert(err?: string) {
+    this.isDangerShown = true;
+    clearTimeout(this.alertTimeout);
+
+    this.alertTimeout = setTimeout(() => {
+      this.isDangerShown = false
+    })
+  }
+
+  successAlert(success?: string) {
+    this.isSuccessShown = true
+
+    clearTimeout(this.alertTimeout);
+
+    this.alertTimeout = setTimeout(() => {
+      this.isSuccessShown = false;
+    }, 2500)
   }
 
 }

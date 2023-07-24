@@ -41,13 +41,13 @@
           <div class="px-5 py-3 d-flex flex-column align-items-center">
             <h4>Hourly Pricing</h4>
             <p>
-              {{ pricingPlan.hourlyPricing }}
+              {{ pricingPlan.hourlyPricing | currency : "EUR" }}
             </p>
           </div>
           <div class="px-5 py-3 d-flex flex-column align-items-center">
             <h4>Daily Pricing</h4>
             <p>
-              {{ pricingPlan.dailyPricing }}
+              {{ pricingPlan.dailyPricing | currency : "EUR" }}
             </p>
           </div>
           <div class="px-5 py-3 d-flex flex-column align-items-center">
@@ -62,6 +62,9 @@
       <ng-container *ngIf="editMode">
         <div class="col-lg-6 col-md-6 col-sm-6 col-12">
           <div class="d-flex flex-column">
+            <div class="d-flex justify-content-center">
+              <h2 class="border-bottom border-warning pb-3">Update Plan</h2>
+            </div>
             <form
               [formGroup]="updateForm"
               class="d-flex flex-row justify-content-around flex-wrap"
@@ -123,7 +126,7 @@
   </div>
 </ng-container>
 
-<!-- <div
+<div
   class="alert alert-success my-5 position-fixed top-0 start-0"
   role="alert"
   *ngIf="isSuccessShown"
@@ -137,4 +140,4 @@
   *ngIf="isDangerShown"
 >
   {{ errorMessage }}
-</div> -->
+</div>

@@ -5,14 +5,18 @@ import { SubscriptionService } from 'src/app/services/subscription/subscription.
 
 @Component({
   selector: 'app-subscription',
-  templateUrl: './subscription.component.html',
-  styleUrls: ['./subscription.component.css']
+  templateUrl: './subscription.component.html'
 })
 export class SubscriptionComponent implements OnInit {
 
   allSubscriptions!: Subscriptions[]
   originalSubscriptions!: Subscriptions[]
   searchTermRecieved!: string
+  isSuccessShown: boolean = false
+  isDangerShown: boolean = false
+  errorMessage?: string
+  successMessage?: string
+  alertTimeout: any
 
   constructor(private subscriptionService: SubscriptionService, private searchService: SearchService) { }
 
@@ -31,7 +35,8 @@ export class SubscriptionComponent implements OnInit {
         this.originalSubscriptions = subscriptions
       },
       error: (err) => {
-        throw err
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
       }
     })
   }
@@ -54,13 +59,35 @@ export class SubscriptionComponent implements OnInit {
   delete(id: number) {
     this.subscriptionService.delete(id).subscribe({
       next: (deletedSub: Subscriptions) => {
+        this.successMessage = "Deleted Subscription"
+        this.successAlert(this.successMessage)
         const index = this.allSubscriptions.findIndex(sub => sub.id === id)
         this.allSubscriptions.splice(index, 1)
       },
       error: (err) => {
-        throw err
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
       }
     })
+  }
+
+  errorAlert(err?: string) {
+    this.isDangerShown = true;
+    clearTimeout(this.alertTimeout);
+
+    this.alertTimeout = setTimeout(() => {
+      this.isDangerShown = false
+    })
+  }
+
+  successAlert(success?: string) {
+    this.isSuccessShown = true
+
+    clearTimeout(this.alertTimeout);
+
+    this.alertTimeout = setTimeout(() => {
+      this.isSuccessShown = false;
+    }, 2500)
   }
 
 }

@@ -38,9 +38,17 @@
       <div
         *ngFor="let spot of getRange(allSpots.totalSpots)"
         class="rounded"
-        style="width: 80px; height: 80px"
+        style="width: 100px; height: 100px"
         [ngClass]="getSpotStatusClass(spot)"
       ></div>
     </div>
   </div>
 </ng-container>
+
+<div
+  class="alert alert-danger my-5 position-fixed top-0 start-0"
+  role="alert"
+  *ngIf="isDangerShown"
+>
+  {{ errorMessage }}
+</div>

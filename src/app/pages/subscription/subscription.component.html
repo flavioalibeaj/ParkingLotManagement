@@ -11,7 +11,7 @@
       <thead>
         <tr>
           <th scope="col">Code</th>
-          <th scope="col">Subscriber Id</th>
+          <th scope="col">Subscriber</th>
           <th scope="col">View Details</th>
           <th scope="col">Delete</th>
         </tr>
@@ -19,7 +19,13 @@
       <tbody>
         <tr *ngFor="let subscription of allSubscriptions">
           <td>{{ subscription.code }}</td>
-          <td>{{ subscription.subscriberId }}</td>
+          <td>
+            {{
+              subscription.subscriber.firstName +
+                " " +
+                subscription.subscriber.lastName
+            }}
+          </td>
           <td>
             <button class="btn btn-light" [routerLink]="[subscription.id]">
               View Details
@@ -37,3 +43,19 @@
 </div>
 
 <ng-template #noSubscriptions>No Subscriptions atm</ng-template>
+
+<div
+  class="alert alert-success my-5 position-fixed top-0 start-0"
+  role="alert"
+  *ngIf="isSuccessShown"
+>
+  {{ successMessage }}
+</div>
+
+<div
+  class="alert alert-danger my-5 position-fixed top-0 start-0"
+  role="alert"
+  *ngIf="isDangerShown"
+>
+  {{ errorMessage }}
+</div>

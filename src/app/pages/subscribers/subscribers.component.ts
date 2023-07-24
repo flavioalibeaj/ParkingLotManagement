@@ -5,14 +5,18 @@ import { SubscriberService } from 'src/app/services/subscriber/subscriber.servic
 
 @Component({
   selector: 'app-subscribers',
-  templateUrl: './subscribers.component.html',
-  styleUrls: ['./subscribers.component.css']
+  templateUrl: './subscribers.component.html'
 })
 export class SubscribersComponent implements OnInit {
 
   allSubscribers!: Subscribers[]
   originalSubscribers!: Subscribers[]
   searchTermRecieved!: string
+  isSuccessShown: boolean = false
+  isDangerShown: boolean = false
+  errorMessage?: string
+  successMessage?: string
+  alertTimeout: any
 
   constructor(private subscribersService: SubscriberService, private searchService: SearchService) { }
 
@@ -31,8 +35,8 @@ export class SubscribersComponent implements OnInit {
         this.originalSubscribers = subscribers
       },
       error: (err) => {
-        console.log("Error Retrieving Subscribers", err)
-        // throw err
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
       }
     })
   }
@@ -40,11 +44,14 @@ export class SubscribersComponent implements OnInit {
   delete(id: number) {
     this.subscribersService.deleteSubscriber(id).subscribe({
       next: (value) => {
+        this.successMessage = "Deleted Subscriber"
+        this.successAlert(this.successMessage)
         const index = this.allSubscribers.findIndex(subs => subs.id === id);
         this.allSubscribers.splice(index, 1)
       },
       error: (err) => {
-        throw err
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
       }
     })
   }
@@ -62,6 +69,25 @@ export class SubscribersComponent implements OnInit {
     } else {
       this.allSubscribers = this.originalSubscribers.slice();
     }
+  }
+
+  errorAlert(err?: string) {
+    this.isDangerShown = true;
+    clearTimeout(this.alertTimeout);
+
+    this.alertTimeout = setTimeout(() => {
+      this.isDangerShown = false
+    })
+  }
+
+  successAlert(success?: string) {
+    this.isSuccessShown = true
+
+    clearTimeout(this.alertTimeout);
+
+    this.alertTimeout = setTimeout(() => {
+      this.isSuccessShown = false;
+    }, 2500)
   }
 
 }

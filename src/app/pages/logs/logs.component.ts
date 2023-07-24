@@ -1,18 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Logs } from 'src/app/models/logs';
 import { Subscriptions } from 'src/app/models/subscriptions';
 import { LogsService } from 'src/app/services/logs/logs.service';
 import { SearchService } from 'src/app/services/search/search.service';
 import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-logs',
-  templateUrl: './logs.component.html',
-  styleUrls: ['./logs.component.css']
+  templateUrl: './logs.component.html'
 })
-export class LogsComponent implements OnInit, OnDestroy {
+export class LogsComponent implements OnInit {
 
   allLogs!: Logs[]
   originalLogs!: Logs[]
@@ -25,8 +23,6 @@ export class LogsComponent implements OnInit, OnDestroy {
   searchTermRecieved!: string
   errorMessage?: string
   successMessage?: string
-  singleLog?: Logs
-  // searchSubscription: Subscription
 
   constructor(private logService: LogsService, private searchService: SearchService, private subscriptionService: SubscriptionService) { }
 
@@ -42,10 +38,6 @@ export class LogsComponent implements OnInit, OnDestroy {
     this.getSubscriptionsWithoutActiveLogs()
   }
 
-  ngOnDestroy(): void {
-
-  }
-
   getAll() {
     this.logService.getAllLogs()
       .subscribe({
@@ -54,10 +46,8 @@ export class LogsComponent implements OnInit, OnDestroy {
           this.originalLogs = logs.reverse()
         },
         error: (err) => {
-          console.log("Error Retrieving All Logs", err)
-          this.errorMessage = err
+          this.errorMessage = err.error
           this.errorAlert(this.errorMessage)
-          // throw err
         }
       })
   }
@@ -68,10 +58,8 @@ export class LogsComponent implements OnInit, OnDestroy {
         this.subscriptionOptions = subs
       },
       error: (err) => {
-        console.log("Error Getting Subscriptions Without Active Logs", err)
-        this.errorMessage = err
+        this.errorMessage = err.error
         this.errorAlert(this.errorMessage)
-        // throw err
       }
     })
   }
@@ -82,15 +70,16 @@ export class LogsComponent implements OnInit, OnDestroy {
         this.allLogs.unshift(res)
         this.successMessage = "Created Log Succesfully"
         this.successAlert(this.successMessage)
+
+        if (this.newLog.controls['subscriptionId'] !== null) {
+          const index = this.subscriptionOptions.findIndex(opt => opt.id == this.newLog.controls['subscriptionId'].value)
+          this.subscriptionOptions.splice(index, 1)
+        }
         this.newLog.reset()
       },
       error: (err) => {
-        console.log("Error Creating Log", err)
         this.errorMessage = err.error
         this.errorAlert(this.errorMessage)
-        console.log("Mesazhi errorit", err.error)
-
-        // throw err
       }
     })
   }
@@ -98,16 +87,15 @@ export class LogsComponent implements OnInit, OnDestroy {
   checkOut(code: string) {
     this.logService.updateLog(code, this.newLog.value).subscribe({
       next: (res) => {
+        const index = this.allLogs.findIndex(log => log.code === code)
+        this.allLogs[index] = res
+
         this.successMessage = `Checked ${code} Out`
         this.successAlert(this.successMessage)
-        this.getAll()
-        this.preFillModal(code)
       },
       error: (err) => {
-        console.log("Error Checking Out", err)
-        this.errorMessage = err
+        this.errorMessage = err.error
         this.errorAlert(this.errorMessage)
-        // throw err
       }
     })
   }
@@ -120,7 +108,7 @@ export class LogsComponent implements OnInit, OnDestroy {
 
     this.alertTimeout = setTimeout(() => {
       this.isSuccessShown = false;
-    }, 2500)
+    }, 3000)
   }
 
   errorAlert(err?: string) {
@@ -129,7 +117,7 @@ export class LogsComponent implements OnInit, OnDestroy {
 
     this.alertTimeout = setTimeout(() => {
       this.isDangerShown = false
-    })
+    }, 3000)
   }
 
   filterLogs() {
@@ -150,16 +138,5 @@ export class LogsComponent implements OnInit, OnDestroy {
     } else {
       this.allLogs = this.originalLogs.slice()
     }
-  }
-
-  preFillModal(code: string) {
-    this.logService.getOne(code).subscribe({
-      next: (log: Logs) => {
-        this.singleLog = log
-      },
-      error: (err) => {
-        console.log("Error filling modal", err)
-      }
-    })
   }
 }

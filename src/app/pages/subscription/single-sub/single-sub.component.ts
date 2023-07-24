@@ -5,8 +5,7 @@ import { SubscriptionService } from 'src/app/services/subscription/subscription.
 
 @Component({
   selector: 'app-single-sub',
-  templateUrl: './single-sub.component.html',
-  styleUrls: ['./single-sub.component.css']
+  templateUrl: './single-sub.component.html'
 })
 export class SingleSubComponent implements OnInit {
 
@@ -33,7 +32,7 @@ export class SingleSubComponent implements OnInit {
     })
   }
 
-  navigateTo(id: number) {
+  navigate(id: number) {
     this.router.navigate([`subscribers/${id}`])
   }
 

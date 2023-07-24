@@ -71,3 +71,11 @@
     </ng-container>
   </form>
 </div>
+
+<div
+  class="alert alert-danger my-5 position-fixed top-0 start-0"
+  role="alert"
+  *ngIf="isDangerShown"
+>
+  {{ errorMessage }}
+</div>

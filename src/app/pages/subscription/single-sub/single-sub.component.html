@@ -1,4 +1,4 @@
-<ng-container *ngIf="subscription">
+<!-- <ng-container *ngIf="subscription">
   <div class="container my-3 bg-3 text-center">
     <div class="d-flex flex-start">
       <button class="btn btn-secondary" routerLink="../">Go Back</button>
@@ -47,6 +47,119 @@
               subscription.subscriber.lastName
           }}
         </p>
+      </div>
+    </div>
+  </div>
+</ng-container> -->
+
+<ng-container *ngIf="subscription">
+  <div class="container my-3 bg-3">
+    <div class="d-flex flex-start">
+      <button class="btn btn-secondary" routerLink="../">Go Back</button>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="d-flex justify-content-center">
+          <h1
+            class="border-bottom border-dark mb-5 mb-sm-5 mb-md-5 md-lg-5 mt-4"
+          >
+            {{ subscription.code }}
+          </h1>
+        </div>
+      </div>
+      <!--
+      <ng-container *ngIf="!editMode">
+        <div class="col-lg-6 col-md-6 col-sm-6 mb-5 mb-sm-0 mb-md-0 mb-lg-0">
+          <div class="d-flex justify-content-center">
+            <button
+              type="button"
+              (click)="editMode = true; preFillForm()"
+              class="btn btn-info"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </ng-container> -->
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+        <div class="d-flex justify-content-center">
+          <h2 class="border-bottom border-info pb-3">
+            Subscription Information
+          </h2>
+        </div>
+        <div
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <h4>Start Date</h4>
+            <p></p>
+          </div>
+          <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <h4>End Date</h4>
+            <p>
+              {{ subscription.endDate | date : "medium" }}
+            </p>
+          </div>
+          <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <h4>Price</h4>
+            <p>
+              {{ subscription.price | currency : "EUR" }}
+            </p>
+          </div>
+          <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <h4>Discount Value</h4>
+            <p>
+              {{ subscription.discountValue / 100 | percent }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+        <div class="d-flex flex-column">
+          <div class="d-flex justify-content-center">
+            <h2>Subscriber Information</h2>
+          </div>
+
+          <div
+            class="d-flex justify-content-center border-bottom border-warning pb-3"
+          >
+            <button
+              class="btn btn-warning"
+              (click)="navigate(subscription.subscriberId)"
+            >
+              See More
+            </button>
+          </div>
+        </div>
+        <div class="d-flex flex-start flex-column">
+          <div class="px-5 py-3">
+            <h4>Subscriber Name</h4>
+            <p>
+              {{
+                subscription.subscriber.firstName +
+                  " " +
+                  subscription.subscriber.lastName
+              }}
+            </p>
+          </div>
+          <div class="px-5 py-3">
+            <h4>Email</h4>
+            <p>
+              {{ subscription.subscriber.email }}
+            </p>
+          </div>
+          <div class="px-5 py-3">
+            <h4>Phone Number</h4>
+            <p>
+              {{ subscription.subscriber.phoneNumber }}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

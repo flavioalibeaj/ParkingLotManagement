@@ -4,17 +4,18 @@ import { PricingPlanService } from 'src/app/services/pricingPlan/pricing-plan.se
 
 @Component({
   selector: 'app-pricing-plan',
-  templateUrl: './pricing-plan.component.html',
-  styleUrls: ['./pricing-plan.component.css']
+  templateUrl: './pricing-plan.component.html'
 })
 export class PricingPlanComponent implements OnInit {
 
   pricingPlans!: PricingPlan[]
+  isDangerShown: boolean = false
+  alertTimeout: any
+  errorMessage?: string
 
   constructor(private pricingPlanService: PricingPlanService) { }
 
   ngOnInit(): void {
-
     this.getAll()
   }
 
@@ -24,9 +25,21 @@ export class PricingPlanComponent implements OnInit {
         this.pricingPlans = plans
       },
       error: (err) => {
-        throw err
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
       }
     })
   }
+
+
+  errorAlert(err?: string) {
+    this.isDangerShown = true;
+    clearTimeout(this.alertTimeout);
+
+    this.alertTimeout = setTimeout(() => {
+      this.isDangerShown = false
+    }, 3000)
+  }
+
 
 }

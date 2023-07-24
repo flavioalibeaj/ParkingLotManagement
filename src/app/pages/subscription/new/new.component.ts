@@ -8,13 +8,15 @@ import { SubscriptionService } from 'src/app/services/subscription/subscription.
 
 @Component({
   selector: 'app-new',
-  templateUrl: './new.component.html',
-  styleUrls: ['./new.component.css']
+  templateUrl: './new.component.html'
 })
 export class NewComponent implements OnInit {
   addSub!: FormGroup
   optionSubscribers!: Subscribers[]
   allSubscriptions!: Subscriptions[]
+  isDangerShown: boolean = false
+  errorMessage?: string
+  alertTimeout: any
 
   constructor(private subscriptionService: SubscriptionService, private subscriberService: SubscriberService, private router: Router) { }
 
@@ -35,7 +37,8 @@ export class NewComponent implements OnInit {
         this.allSubscriptions = subs
       },
       error: (err) => {
-        throw err
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
       }
     })
   }
@@ -47,7 +50,8 @@ export class NewComponent implements OnInit {
         this.router.navigate(["../"])
       },
       error: (err) => {
-        throw err
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
       }
     })
   }
@@ -58,8 +62,18 @@ export class NewComponent implements OnInit {
         this.optionSubscribers = subs
       },
       error: (err) => {
-        throw err
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
       }
+    })
+  }
+
+  errorAlert(err?: string) {
+    this.isDangerShown = true;
+    clearTimeout(this.alertTimeout);
+
+    this.alertTimeout = setTimeout(() => {
+      this.isDangerShown = false
     })
   }
 }

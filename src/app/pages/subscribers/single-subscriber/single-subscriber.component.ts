@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscribers } from 'src/app/models/subscribers';
@@ -6,8 +6,7 @@ import { SubscriberService } from 'src/app/services/subscriber/subscriber.servic
 
 @Component({
   selector: 'app-single-subscriber',
-  templateUrl: './single-subscriber.component.html',
-  styleUrls: ['./single-subscriber.component.css']
+  templateUrl: './single-subscriber.component.html'
 })
 export class SingleSubscriberComponent implements OnInit {
 
@@ -47,10 +46,8 @@ export class SingleSubscriberComponent implements OnInit {
         this.preFillForm()
       },
       error: (err) => {
-        console.log("Error Retrieving Subscriber", err)
-        this.errorMessage = "Error Retrieving Subscriber"
+        this.errorMessage = err.error
         this.errorAlert(this.errorMessage)
-        // throw err
       }
     })
   }
@@ -69,15 +66,13 @@ export class SingleSubscriberComponent implements OnInit {
   update() {
     this.SubService.updateSubscriber(this.subscriberId, this.updateSub.value).subscribe({
       next: (value: Subscribers) => {
-        this.subscriber = value
+        this.getOne()
         this.successMessage = "Updated Succesfully"
         this.successAlert(this.successMessage)
       },
       error: (err) => {
-        console.log("Error Updating Subscriber", err)
-        this.errorMessage = "Error Updating Subscriber"
+        this.errorMessage = err.error
         this.errorAlert(this.errorMessage)
-        // throw (err);
       }
     })
   }
