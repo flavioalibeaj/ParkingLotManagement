@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscriber } from 'src/app/models/subscriber';
+import { Subscribers } from 'src/app/models/subscribers';
 import { SubscriberService } from 'src/app/services/subscriber/subscriber.service';
 
 @Component({
@@ -12,13 +12,14 @@ import { SubscriberService } from 'src/app/services/subscriber/subscriber.servic
 export class SingleSubscriberComponent implements OnInit {
 
   subscriberId!: number
-  subscriber!: Subscriber
+  subscriber!: Subscribers
   updateSub!: FormGroup
   isSuccessShown: boolean = false
   isDangerShown: boolean = false
   errorMessage?: string
   successMessage?: string
   alertTimeout: any
+  editMode: boolean = false
 
   constructor(private activeRoute: ActivatedRoute, private SubService: SubscriberService, private router: Router) { }
 
@@ -41,7 +42,7 @@ export class SingleSubscriberComponent implements OnInit {
 
   getOne() {
     this.SubService.getOne(this.subscriberId).subscribe({
-      next: (sub: Subscriber) => {
+      next: (sub: Subscribers) => {
         this.subscriber = sub
         this.preFillForm()
       },
@@ -67,7 +68,7 @@ export class SingleSubscriberComponent implements OnInit {
 
   update() {
     this.SubService.updateSubscriber(this.subscriberId, this.updateSub.value).subscribe({
-      next: (value: Subscriber) => {
+      next: (value: Subscribers) => {
         this.subscriber = value
         this.successMessage = "Updated Succesfully"
         this.successAlert(this.successMessage)

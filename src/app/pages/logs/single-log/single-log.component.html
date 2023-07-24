@@ -97,7 +97,7 @@
             <div class="px-5 py-3">
               <h3>End Date</h3>
               <p>
-                {{ log.subscription.endDate }}
+                {{ log.subscription.endDate | date : "medium" }}
               </p>
             </div>
           </div>

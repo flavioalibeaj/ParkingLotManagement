@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscriber } from 'src/app/models/subscriber';
-import { Subscription } from 'src/app/models/subscription';
+import { Subscribers } from 'src/app/models/subscribers';
+import { Subscriptions } from 'src/app/models/subscriptions';
 import { SubscriberService } from 'src/app/services/subscriber/subscriber.service';
 import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
 
@@ -13,8 +13,8 @@ import { SubscriptionService } from 'src/app/services/subscription/subscription.
 })
 export class NewComponent implements OnInit {
   addSub!: FormGroup
-  optionSubscribers!: Subscriber[]
-  allSubscriptions!: Subscription[]
+  optionSubscribers!: Subscribers[]
+  allSubscriptions!: Subscriptions[]
 
   constructor(private subscriptionService: SubscriptionService, private subscriberService: SubscriberService, private router: Router) { }
 
@@ -31,7 +31,7 @@ export class NewComponent implements OnInit {
 
   private getAllSubscriptions() {
     this.subscriptionService.getAll().subscribe({
-      next: (subs: Subscription[]) => {
+      next: (subs: Subscriptions[]) => {
         this.allSubscriptions = subs
       },
       error: (err) => {
@@ -42,7 +42,7 @@ export class NewComponent implements OnInit {
 
   createSubscription() {
     this.subscriptionService.create(this.addSub.value).subscribe({
-      next: (createdSub: Subscription) => {
+      next: (createdSub: Subscriptions) => {
         this.allSubscriptions.push(createdSub)
         this.router.navigate(["../"])
       },
@@ -54,7 +54,7 @@ export class NewComponent implements OnInit {
 
   getSubscribersWithoutSubscription() {
     this.subscriberService.getSubscribersWithoutActiveSubscription().subscribe({
-      next: (subs: Subscriber[]) => {
+      next: (subs: Subscribers[]) => {
         this.optionSubscribers = subs
       },
       error: (err) => {

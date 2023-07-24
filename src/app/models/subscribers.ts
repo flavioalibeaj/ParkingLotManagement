@@ -1,6 +1,6 @@
-import { Subscription } from "./subscription"
+import { Subscriptions } from "./subscriptions"
 
-export interface Subscriber {
+export interface Subscribers {
   id: number
   firstName: string,
   lastName: string,
@@ -10,5 +10,5 @@ export interface Subscriber {
   birthday: Date | string,
   plateNumber: string,
   isDeleted: boolean,
-  subscription: Subscription
+  subscription: Subscriptions
 }

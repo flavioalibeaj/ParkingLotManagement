@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Logs } from 'src/app/models/logs';
-import { Subscription } from 'src/app/models/subscription';
+import { Subscriptions } from 'src/app/models/subscriptions';
 import { LogsService } from 'src/app/services/logs/logs.service';
 import { SearchService } from 'src/app/services/search/search.service';
 import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-logs',
   templateUrl: './logs.component.html',
   styleUrls: ['./logs.component.css']
 })
-export class LogsComponent implements OnInit {
+export class LogsComponent implements OnInit, OnDestroy {
 
   allLogs!: Logs[]
   originalLogs!: Logs[]
@@ -19,11 +20,13 @@ export class LogsComponent implements OnInit {
   isDangerShown: boolean = false
   alertTimeout: any
   newLog!: FormGroup
-  subscriptionOptions!: Subscription[]
+  subscriptionOptions!: Subscriptions[]
   logCreationMode: boolean = false
   searchTermRecieved!: string
   errorMessage?: string
   successMessage?: string
+  singleLog?: Logs
+  // searchSubscription: Subscription
 
   constructor(private logService: LogsService, private searchService: SearchService, private subscriptionService: SubscriptionService) { }
 
@@ -37,6 +40,10 @@ export class LogsComponent implements OnInit {
       this.filterLogs()
     })
     this.getSubscriptionsWithoutActiveLogs()
+  }
+
+  ngOnDestroy(): void {
+
   }
 
   getAll() {
@@ -57,7 +64,7 @@ export class LogsComponent implements OnInit {
 
   getSubscriptionsWithoutActiveLogs() {
     this.subscriptionService.getSubscriptionsWithoutActiveLogs().subscribe({
-      next: (subs: Subscription[]) => {
+      next: (subs: Subscriptions[]) => {
         this.subscriptionOptions = subs
       },
       error: (err) => {
@@ -79,12 +86,32 @@ export class LogsComponent implements OnInit {
       },
       error: (err) => {
         console.log("Error Creating Log", err)
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
+        console.log("Mesazhi errorit", err.error)
+
+        // throw err
+      }
+    })
+  }
+
+  checkOut(code: string) {
+    this.logService.updateLog(code, this.newLog.value).subscribe({
+      next: (res) => {
+        this.successMessage = `Checked ${code} Out`
+        this.successAlert(this.successMessage)
+        this.getAll()
+        this.preFillModal(code)
+      },
+      error: (err) => {
+        console.log("Error Checking Out", err)
         this.errorMessage = err
         this.errorAlert(this.errorMessage)
         // throw err
       }
     })
   }
+
 
   successAlert(success?: string) {
     this.isSuccessShown = true
@@ -94,22 +121,6 @@ export class LogsComponent implements OnInit {
     this.alertTimeout = setTimeout(() => {
       this.isSuccessShown = false;
     }, 2500)
-  }
-
-  checkOut(code: string) {
-    this.logService.updateLog(code, this.newLog.value).subscribe({
-      next: (res) => {
-        this.successMessage = `Checked ${code} Out`
-        this.successAlert(this.successMessage)
-        this.getAll()
-      },
-      error: (err) => {
-        console.log("Error Checking Out", err)
-        this.errorMessage = err
-        this.errorAlert(this.errorMessage)
-        // throw err
-      }
-    })
   }
 
   errorAlert(err?: string) {
@@ -125,13 +136,30 @@ export class LogsComponent implements OnInit {
     if (this.searchTermRecieved) {
       this.allLogs = this.originalLogs.filter((log) => {
         const codeMatch = log.code.toLowerCase() === this.searchTermRecieved.toLowerCase();
-        const subFNameMatch = log.subscription.subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
-        const subLNameMatch = log.subscription.subscriber.lastName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
 
-        return codeMatch || subFNameMatch || subLNameMatch;
+        if (log.subscription && log.subscriptionId) {
+          const subFNameMatch = log.subscription.subscriber.firstName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+          const subLNameMatch = log.subscription.subscriber.lastName.toLowerCase().includes(this.searchTermRecieved.toLowerCase());
+
+          return codeMatch || subFNameMatch || subLNameMatch
+        }
+
+        return codeMatch
+
       });
     } else {
       this.allLogs = this.originalLogs.slice()
     }
+  }
+
+  preFillModal(code: string) {
+    this.logService.getOne(code).subscribe({
+      next: (log: Logs) => {
+        this.singleLog = log
+      },
+      error: (err) => {
+        console.log("Error filling modal", err)
+      }
+    })
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'src/app/models/subscription';
+import { Subscriptions } from 'src/app/models/subscriptions';
 import { SearchService } from 'src/app/services/search/search.service';
 import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
 
@@ -10,8 +10,8 @@ import { SubscriptionService } from 'src/app/services/subscription/subscription.
 })
 export class SubscriptionComponent implements OnInit {
 
-  allSubscriptions!: Subscription[]
-  originalSubscriptions!: Subscription[]
+  allSubscriptions!: Subscriptions[]
+  originalSubscriptions!: Subscriptions[]
   searchTermRecieved!: string
 
   constructor(private subscriptionService: SubscriptionService, private searchService: SearchService) { }
@@ -26,7 +26,7 @@ export class SubscriptionComponent implements OnInit {
 
   getAll() {
     this.subscriptionService.getAll().subscribe({
-      next: (subscriptions: Subscription[]) => {
+      next: (subscriptions: Subscriptions[]) => {
         this.allSubscriptions = subscriptions
         this.originalSubscriptions = subscriptions
       },
@@ -53,7 +53,7 @@ export class SubscriptionComponent implements OnInit {
 
   delete(id: number) {
     this.subscriptionService.delete(id).subscribe({
-      next: (deletedSub: Subscription) => {
+      next: (deletedSub: Subscriptions) => {
         const index = this.allSubscriptions.findIndex(sub => sub.id === id)
         this.allSubscriptions.splice(index, 1)
       },

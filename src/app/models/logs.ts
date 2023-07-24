@@ -1,4 +1,4 @@
-import { Subscription } from "./subscription"
+import { Subscriptions } from "./subscriptions"
 
 export interface Logs {
   id?: number,
@@ -7,5 +7,5 @@ export interface Logs {
   checkInTime: string | Date,
   checkOutTime: string | Date,
   price: number
-  subscription: Subscription
+  subscription: Subscriptions
 }

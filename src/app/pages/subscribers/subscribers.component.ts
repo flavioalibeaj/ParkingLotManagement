@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscriber } from 'src/app/models/subscriber';
+import { Subscribers } from 'src/app/models/subscribers';
 import { SearchService } from 'src/app/services/search/search.service';
 import { SubscriberService } from 'src/app/services/subscriber/subscriber.service';
 
@@ -10,8 +10,8 @@ import { SubscriberService } from 'src/app/services/subscriber/subscriber.servic
 })
 export class SubscribersComponent implements OnInit {
 
-  allSubscribers!: Subscriber[]
-  originalSubscribers!: Subscriber[]
+  allSubscribers!: Subscribers[]
+  originalSubscribers!: Subscribers[]
   searchTermRecieved!: string
 
   constructor(private subscribersService: SubscriberService, private searchService: SearchService) { }
@@ -26,7 +26,7 @@ export class SubscribersComponent implements OnInit {
 
   getAll() {
     this.subscribersService.getAll().subscribe({
-      next: (subscribers: Subscriber[]) => {
+      next: (subscribers: Subscribers[]) => {
         this.allSubscribers = subscribers
         this.originalSubscribers = subscribers
       },

@@ -4,50 +4,74 @@
       <button class="btn btn-secondary" routerLink="../">Go Back</button>
     </div>
 
-    <div class="d-flex justify-content-center">
-      <h1 class="border-bottom border-dark mb-5 mt-4">
-        {{ subscriber.firstName + " " + subscriber.lastName }}
-      </h1>
+    <div class="row align-items-center">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="d-flex justify-content-center">
+          <h1
+            class="border-bottom border-dark mb-5 mb-sm-5 mb-md-5 md-lg-5 mt-4"
+          >
+            {{ subscriber.firstName + " " + subscriber.lastName }}
+          </h1>
+        </div>
+      </div>
+
+      <ng-container *ngIf="!editMode">
+        <div class="col-lg-6 col-md-6 col-sm-6 mb-5 mb-sm-0 mb-md-0 mb-lg-0">
+          <div class="d-flex justify-content-center">
+            <button
+              type="button"
+              (click)="editMode = true; preFillForm()"
+              class="btn btn-info"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </ng-container>
     </div>
 
     <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
         <div class="d-flex justify-content-center">
-          <h2 class="border-bottom border-info pb-3">Subscriber Information</h2>
+          <h2 class="border-bottom border-info pb-3">
+            {{ !editMode ? "Subscriber Information" : "Update Subscriber" }}
+          </h2>
         </div>
         <div
           class="d-flex flex-column justify-content-center align-items-center"
         >
-          <div class="px-5 py-3 d-flex flex-column align-items-center">
-            <h4>Id Card Number</h4>
-            <p>
-              {{ subscriber.idCardNumber }}
-            </p>
-          </div>
-          <div class="px-5 py-3 d-flex flex-column align-items-center">
-            <h4>Plate Number</h4>
-            <p>
-              {{ subscriber.plateNumber }}
-            </p>
-          </div>
-          <div class="px-5 py-3 d-flex flex-column align-items-center">
-            <h4>Email</h4>
-            <p>
-              {{ subscriber.email }}
-            </p>
-          </div>
-          <div class="px-5 py-3 d-flex flex-column align-items-center">
-            <h4>Phone Number</h4>
-            <p>
-              {{ subscriber.phoneNumber }}
-            </p>
-          </div>
-          <div class="px-5 py-3 d-flex flex-column align-items-center">
-            <h4>Birthday</h4>
-            <p>
-              {{ subscriber.birthday }}
-            </p>
-          </div>
+          <ng-container *ngIf="!editMode; else fillForm">
+            <div class="px-5 py-3 d-flex flex-column align-items-center">
+              <h4>Id Card Number</h4>
+              <p>
+                {{ subscriber.idCardNumber }}
+              </p>
+            </div>
+            <div class="px-5 py-3 d-flex flex-column align-items-center">
+              <h4>Plate Number</h4>
+              <p>
+                {{ subscriber.plateNumber }}
+              </p>
+            </div>
+            <div class="px-5 py-3 d-flex flex-column align-items-center">
+              <h4>Email</h4>
+              <p>
+                {{ subscriber.email }}
+              </p>
+            </div>
+            <div class="px-5 py-3 d-flex flex-column align-items-center">
+              <h4>Phone Number</h4>
+              <p>
+                {{ subscriber.phoneNumber }}
+              </p>
+            </div>
+            <div class="px-5 py-3 d-flex flex-column align-items-center">
+              <h4>Birthday</h4>
+              <p>
+                {{ subscriber.birthday | date : "mediumDate" }}
+              </p>
+            </div>
+          </ng-container>
         </div>
       </div>
 
@@ -94,7 +118,7 @@
             <div class="px-5 py-3">
               <h4>End Date</h4>
               <p>
-                {{ subscriber.subscription.endDate }}
+                {{ subscriber.subscription.endDate | date : "medium" }}
               </p>
             </div>
           </div>
@@ -125,3 +149,79 @@
 >
   {{ errorMessage }}
 </div>
+
+<ng-template #fillForm>
+  <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+    <div class="d-flex flex-column">
+      <form
+        [formGroup]="updateSub"
+        class="d-flex flex-row justify-content-around flex-wrap"
+        (ngSubmit)="update(); editMode = false"
+      >
+        <div>
+          <div class="mt-3 mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="firstName"
+            />
+          </div>
+          <div class="mt-3 mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="lastName"
+            />
+          </div>
+          <div class="mt-3 mb-3">
+            <label for="idCardNumber" class="form-label">Id Card Number</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="idCardNumber"
+            />
+          </div>
+          <div class="mt-3 mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" formControlName="email" />
+          </div>
+          <div class="mt-3 mb-3">
+            <label for="phoneNumber" class="form-label">Phone Number</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="phoneNumber"
+            />
+          </div>
+          <div class="mt-3 mb-3">
+            <label for="plateNumber" class="form-label">Plate Number</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="plateNumber"
+            />
+          </div>
+
+          <div class="mb-3 d-flex justify-content-evenly">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              (click)="editMode = false"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-success"
+              [disabled]="updateSub.status === 'INVALID'"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

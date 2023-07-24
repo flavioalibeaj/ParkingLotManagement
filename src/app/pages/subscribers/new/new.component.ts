@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscriber } from 'src/app/models/subscriber';
+import { Subscribers } from 'src/app/models/subscribers';
 import { SubscriberService } from 'src/app/services/subscriber/subscriber.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { SubscriberService } from 'src/app/services/subscriber/subscriber.servic
 export class NewComponent implements OnInit {
 
   createSubForm!: FormGroup
-  private allSubscribers!: Subscriber[]
+  private allSubscribers!: Subscribers[]
 
   constructor(private subscribersService: SubscriberService, private router: Router) { }
 
@@ -36,7 +36,7 @@ export class NewComponent implements OnInit {
 
   private getAll() {
     this.subscribersService.getAll().subscribe({
-      next: (subscribers: Subscriber[]) => {
+      next: (subscribers: Subscribers[]) => {
         this.allSubscribers = subscribers
       },
       error: (err) => {
@@ -47,7 +47,7 @@ export class NewComponent implements OnInit {
 
   submitNewSub() {
     this.subscribersService.create(this.createSubForm.value).subscribe({
-      next: (response: Subscriber) => {
+      next: (response: Subscribers) => {
         this.allSubscribers.push(response)
         this.router.navigate(["subscribers"])
       },

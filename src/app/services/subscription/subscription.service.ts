@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, tap } from 'rxjs';
-import { Subscription } from 'src/app/models/subscription';
+import { Subscriptions } from 'src/app/models/subscriptions';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,8 @@ export class SubscriptionService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Subscription[]> {
-    return this.http.get<Subscription[]>("https://localhost:7091/api/Subscription")
+  getAll(): Observable<Subscriptions[]> {
+    return this.http.get<Subscriptions[]>("https://localhost:7091/api/Subscription")
       .pipe(
         // tap<Subscription[]>(value => console.log("All subscriptions", value))
         catchError(err => {
@@ -20,8 +20,8 @@ export class SubscriptionService {
       )
   }
 
-  create(subscription: Subscription): Observable<Subscription> {
-    return this.http.post<Subscription>("https://localhost:7091/api/Subscription", subscription)
+  create(subscription: Subscriptions): Observable<Subscriptions> {
+    return this.http.post<Subscriptions>("https://localhost:7091/api/Subscription", subscription)
       .pipe(
         // tap<Subscription>(value => console.log("Created subscription", value))
         catchError(err => {
@@ -30,8 +30,8 @@ export class SubscriptionService {
       )
   }
 
-  getOne(id: number): Observable<Subscription> {
-    return this.http.get<Subscription>(`https://localhost:7091/api/Subscription/${id}`)
+  getOne(id: number): Observable<Subscriptions> {
+    return this.http.get<Subscriptions>(`https://localhost:7091/api/Subscription/${id}`)
       .pipe(
         // tap<Subscription>(value => console.log("Single subscription", value))
         catchError(err => {
@@ -40,8 +40,8 @@ export class SubscriptionService {
       )
   }
 
-  delete(id: number): Observable<Subscription> {
-    return this.http.delete<Subscription>(`https://localhost:7091/api/Subscription/${id}`)
+  delete(id: number): Observable<Subscriptions> {
+    return this.http.delete<Subscriptions>(`https://localhost:7091/api/Subscription/${id}`)
       .pipe(
         // tap<Subscription>(value => console.log("Deleted subscription", value))
         catchError(err => {
@@ -50,8 +50,8 @@ export class SubscriptionService {
       )
   }
 
-  getSubscriptionsWithoutActiveLogs(): Observable<Subscription[]> {
-    return this.http.get<Subscription[]>("https://localhost:7091/api/Subscription/GetSubscriptionsWithNoActiveLogs")
+  getSubscriptionsWithoutActiveLogs(): Observable<Subscriptions[]> {
+    return this.http.get<Subscriptions[]>("https://localhost:7091/api/Subscription/GetSubscriptionsWithNoActiveLogs")
       .pipe(
         // tap<Subscription[]>(value => console.log("Value", value))
         catchError(err => {

@@ -67,7 +67,13 @@
 
           <ng-container *ngIf="!log.checkOutTime; else carIsCheckedOut">
             <td>
-              <button class="btn btn-danger" (click)="checkOut(log.code)">
+              <button
+                class="btn btn-danger"
+                type="button"
+                (click)="checkOut(log.code)"
+                data-bs-toggle="modal"
+                [attr.data-bs-target]="['#exampleModal' + log.code]"
+              >
                 Check Out
               </button>
             </td>
@@ -80,6 +86,72 @@
               </button>
             </td>
           </ng-template>
+
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            [id]="['exampleModal' + log.code]"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    {{ log.code }}
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <div class="d-flex justify-content-center">
+                    <div
+                      class="d-flex flex-column justify-content-center align-items-center"
+                    >
+                      <div
+                        class="px-5 py-3 d-flex flex-column align-items-center"
+                      >
+                        <h4>Price</h4>
+                        <p>
+                          {{ singleLog?.price | currency : "EUR" }}
+                        </p>
+                      </div>
+                      <div
+                        class="px-5 py-3 d-flex flex-column align-items-center"
+                      >
+                        <h4>Check In Time</h4>
+                        <p>
+                          {{ singleLog?.checkInTime | date : "medium" }}
+                        </p>
+                      </div>
+                      <div
+                        class="px-5 py-3 d-flex flex-column align-items-center"
+                      >
+                        <h4>Check Out Time</h4>
+                        <p>
+                          {{ singleLog?.checkOutTime | date : "medium" }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </tr>
       </tbody>
     </table>

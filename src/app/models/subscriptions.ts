@@ -1,11 +1,11 @@
-import { Subscriber } from "./subscriber"
+import { Subscribers } from "./subscribers"
 import { Logs } from "./logs"
 
-export interface Subscription {
+export interface Subscriptions {
   id: number,
   code: string,
   subscriberId: number,
-  subscriber: Subscriber
+  subscriber: Subscribers
   price: number,
   discountValue: number,
   startDate: Date,
