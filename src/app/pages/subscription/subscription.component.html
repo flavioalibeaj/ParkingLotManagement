@@ -3,43 +3,45 @@
     Add Subscription
   </button>
 
-  <div class="table-responsive">
-    <table
-      class="table table-hover"
-      *ngIf="allSubscriptions; else noSubscriptions"
-    >
-      <thead>
-        <tr>
-          <th scope="col">Code</th>
-          <th scope="col">Subscriber</th>
-          <th scope="col">View Details</th>
-          <th scope="col">Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let subscription of allSubscriptions">
-          <td>{{ subscription.code }}</td>
-          <td>
-            {{
-              subscription.subscriber.firstName +
-                " " +
-                subscription.subscriber.lastName
-            }}
-          </td>
-          <td>
-            <button class="btn btn-light" [routerLink]="[subscription.id]">
-              View Details
-            </button>
-          </td>
-          <td>
-            <button class="btn btn-danger" (click)="delete(subscription.id)">
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <ng-container *ngIf="windowWidth >= 600; else cardStyle">
+    <div class="table-responsive">
+      <table
+        class="table table-hover"
+        *ngIf="allSubscriptions; else noSubscriptions"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Code</th>
+            <th scope="col">Subscriber</th>
+            <th scope="col">View Details</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let subscription of allSubscriptions">
+            <td>{{ subscription.code }}</td>
+            <td>
+              {{
+                subscription.subscriber.firstName +
+                  " " +
+                  subscription.subscriber.lastName
+              }}
+            </td>
+            <td>
+              <button class="btn btn-light" [routerLink]="[subscription.id]">
+                View Details
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-danger" (click)="delete(subscription.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
 </div>
 
 <ng-template #noSubscriptions>No Subscriptions atm</ng-template>
@@ -59,3 +61,50 @@
 >
   {{ errorMessage }}
 </div>
+
+<ng-template #cardStyle>
+  <div class="container d-flex mt-3 flex-column gap-5">
+    <div class="card" *ngFor="let sub of allSubscriptions">
+      <div class="card-body container">
+        <div class="row my-2">
+          <div class="col-6 d-flex flex-column gap-2 justify-content-around">
+            <div>
+              <h4>Code:</h4>
+            </div>
+            <div>
+              <h4>Subscriber:</h4>
+            </div>
+          </div>
+          <div class="col-6 d-flex flex-column gap-2 justify-content-around">
+            <div>
+              <p>
+                {{ sub.code }}
+              </p>
+            </div>
+            <div>
+              <p>
+                {{ sub.subscriber.firstName + sub.subscriber.lastName }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row my-2">
+          <div class="col-6">
+            <div class="d-flex align-items-center">
+              <button class="btn btn-light" [routerLink]="[sub.id]">
+                View Details
+              </button>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex align-items-center">
+              <button class="btn btn-danger" (click)="delete(sub.id)">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

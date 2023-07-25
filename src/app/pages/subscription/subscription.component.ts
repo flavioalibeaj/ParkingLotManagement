@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Subscriptions } from 'src/app/models/subscriptions';
 import { SearchService } from 'src/app/services/search/search.service';
 import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
@@ -17,8 +17,14 @@ export class SubscriptionComponent implements OnInit {
   errorMessage?: string
   successMessage?: string
   alertTimeout: any
+  windowWidth = window.innerWidth
 
   constructor(private subscriptionService: SubscriptionService, private searchService: SearchService) { }
+
+  @HostListener("window:resize", ["$event"])
+  onWindowResize(event: any) {
+    this.windowWidth = event.target.innerWidth
+  }
 
   ngOnInit(): void {
     this.getAll()

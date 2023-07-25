@@ -22,7 +22,7 @@
         <input type="date" class="form-control" formControlName="endDate" />
       </div>
       <mat-form-field class="example-full-width">
-        <mat-label>Subscriber Id</mat-label>
+        <mat-label>Subscriber</mat-label>
         <input
           type="text"
           placeholder="Pick one"
@@ -36,7 +36,7 @@
             *ngFor="let option of optionSubscribers"
             [value]="option.id"
           >
-            {{ option.id }}
+            {{ option.firstName + " " + option.lastName }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>

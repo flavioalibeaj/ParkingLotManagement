@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Logs } from 'src/app/models/logs';
 import { Subscriptions } from 'src/app/models/subscriptions';
@@ -23,8 +23,15 @@ export class LogsComponent implements OnInit {
   searchTermRecieved!: string
   errorMessage?: string
   successMessage?: string
+  windowWidth = window.innerWidth
+
 
   constructor(private logService: LogsService, private searchService: SearchService, private subscriptionService: SubscriptionService) { }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event: any): void {
+    this.windowWidth = event.target.innerWidth;
+  }
 
   ngOnInit(): void {
     this.newLog = new FormGroup({

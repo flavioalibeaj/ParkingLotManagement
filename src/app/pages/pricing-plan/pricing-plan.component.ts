@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { PricingPlan } from 'src/app/models/pricing-plan';
 import { PricingPlanService } from 'src/app/services/pricingPlan/pricing-plan.service';
 
@@ -12,8 +12,14 @@ export class PricingPlanComponent implements OnInit {
   isDangerShown: boolean = false
   alertTimeout: any
   errorMessage?: string
+  windowWidth = window.innerWidth
 
   constructor(private pricingPlanService: PricingPlanService) { }
+
+  @HostListener("window:resize", ['$event'])
+  onWindowResize(event: any) {
+    this.windowWidth = event.target.innerWidth;
+  }
 
   ngOnInit(): void {
     this.getAll()
