@@ -12,6 +12,10 @@ export class SingleSubComponent implements OnInit {
   subId!: number
   subscription!: Subscriptions
 
+  isDangerShown: boolean = false
+  errorMessage?: string
+  alertTimeout: any
+
   constructor(private subscriptionService: SubscriptionService, private activeRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -27,13 +31,23 @@ export class SingleSubComponent implements OnInit {
         this.subscription = sub
       },
       error: (err) => {
-        throw err
+        this.errorMessage = err.error
+        this.errorAlert(this.errorMessage)
       }
     })
   }
 
   navigate(id: number) {
     this.router.navigate([`subscribers/${id}`])
+  }
+
+  errorAlert(err?: string) {
+    this.isDangerShown = true;
+    clearTimeout(this.alertTimeout);
+
+    this.alertTimeout = setTimeout(() => {
+      this.isDangerShown = false
+    }, 3000)
   }
 
 }

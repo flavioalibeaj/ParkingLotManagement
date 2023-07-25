@@ -67,6 +67,6 @@ export class NewComponent implements OnInit {
 
     this.alertTimeout = setTimeout(() => {
       this.isDangerShown = false
-    })
+    }, 3000)
   }
 }

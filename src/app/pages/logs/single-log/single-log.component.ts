@@ -47,7 +47,7 @@ export class SingleLogComponent implements OnInit {
 
     this.alertTimeout = setTimeout(() => {
       this.isDangerShown = false
-    })
+    }, 3000)
   }
 
 }

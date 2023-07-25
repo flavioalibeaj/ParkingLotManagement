@@ -47,7 +47,7 @@ export class NewComponent implements OnInit {
     this.subscriptionService.create(this.addSub.value).subscribe({
       next: (createdSub: Subscriptions) => {
         this.allSubscriptions.push(createdSub)
-        this.router.navigate(["../"])
+        this.router.navigate(["subscriptions"])
       },
       error: (err) => {
         this.errorMessage = err.error
@@ -74,6 +74,6 @@ export class NewComponent implements OnInit {
 
     this.alertTimeout = setTimeout(() => {
       this.isDangerShown = false
-    })
+    }, 3000)
   }
 }

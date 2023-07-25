@@ -41,31 +41,31 @@
           class="d-flex flex-column justify-content-center align-items-center"
         >
           <ng-container *ngIf="!editMode; else fillForm">
-            <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <div class="d-flex flex-column align-items-center px-5 py-3">
               <h4>Id Card Number</h4>
               <p>
                 {{ subscriber.idCardNumber }}
               </p>
             </div>
-            <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <div class="d-flex flex-column align-items-center px-5 py-3">
               <h4>Plate Number</h4>
               <p>
                 {{ subscriber.plateNumber }}
               </p>
             </div>
-            <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <div class="d-flex flex-column align-items-center px-5 py-3">
               <h4>Email</h4>
               <p>
                 {{ subscriber.email }}
               </p>
             </div>
-            <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <div class="d-flex flex-column align-items-center px-5 py-3">
               <h4>Phone Number</h4>
               <p>
                 {{ subscriber.phoneNumber }}
               </p>
             </div>
-            <div class="px-5 py-3 d-flex flex-column align-items-center">
+            <div class="d-flex flex-column align-items-center px-5 py-3">
               <h4>Birthday</h4>
               <p>
                 {{ subscriber.birthday | date : "mediumDate" }}
@@ -102,20 +102,22 @@
           </div>
         </div>
         <ng-container *ngIf="subscriber.subscription; else noSubscription">
-          <div class="d-flex flex-start flex-column">
-            <div class="px-5 py-3">
+          <div
+            class="d-flex flex-column justify-content-center align-items-center"
+          >
+            <div class="d-flex flex-column align-items-center px-5 py-3">
               <h4>Subscription Id</h4>
               <p>
                 {{ subscriber.subscription.id }}
               </p>
             </div>
-            <div class="px-5 py-3">
+            <div class="d-flex flex-column align-items-center px-5 py-3">
               <h4>Code</h4>
               <p>
                 {{ subscriber.subscription.code }}
               </p>
             </div>
-            <div class="px-5 py-3">
+            <div class="d-flex flex-column align-items-center px-5 py-3">
               <h4>End Date</h4>
               <p>
                 {{ subscriber.subscription.endDate | date : "medium" }}

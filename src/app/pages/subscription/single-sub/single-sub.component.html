@@ -1,57 +1,3 @@
-<!-- <ng-container *ngIf="subscription">
-  <div class="container my-3 bg-3 text-center">
-    <div class="d-flex flex-start">
-      <button class="btn btn-secondary" routerLink="../">Go Back</button>
-    </div>
-    <h1 class="margin">
-      {{ subscription.code }}
-    </h1>
-
-    <div class="row my-5 align-items-center">
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>Subscriber Id</h3>
-        <p>
-          {{ subscription.subscriberId }}
-        </p>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>Price</h3>
-        <p>
-          {{ subscription.price | currency : "EUR" }}
-        </p>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>Start Date</h3>
-        <p>
-          {{ subscription.startDate | date : "medium" }}
-        </p>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>End Date</h3>
-        <p>
-          {{ subscription.endDate | date : "medium" }}
-        </p>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>Discount Value</h3>
-        <p>
-          {{ subscription.discountValue / 100 | percent }}
-        </p>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <h3>Subscriber</h3>
-        <p (click)="navigateTo(subscription.subscriberId)">
-          {{
-            subscription.subscriber.firstName +
-              " " +
-              subscription.subscriber.lastName
-          }}
-        </p>
-      </div>
-    </div>
-  </div>
-</ng-container> -->
-
 <ng-container *ngIf="subscription">
   <div class="container my-3 bg-3">
     <div class="d-flex flex-start">
@@ -68,20 +14,6 @@
           </h1>
         </div>
       </div>
-      <!--
-      <ng-container *ngIf="!editMode">
-        <div class="col-lg-6 col-md-6 col-sm-6 mb-5 mb-sm-0 mb-md-0 mb-lg-0">
-          <div class="d-flex justify-content-center">
-            <button
-              type="button"
-              (click)="editMode = true; preFillForm()"
-              class="btn btn-info"
-            >
-              Update
-            </button>
-          </div>
-        </div>
-      </ng-container> -->
     </div>
 
     <div class="row">
@@ -94,23 +26,23 @@
         <div
           class="d-flex flex-column justify-content-center align-items-center"
         >
-          <div class="px-5 py-3 d-flex flex-column align-items-center">
+          <div class="d-flex flex-column align-items-center px-5 py-3">
             <h4>Start Date</h4>
-            <p></p>
+            <p>{{ subscription.startDate | date : "medium" }}</p>
           </div>
-          <div class="px-5 py-3 d-flex flex-column align-items-center">
+          <div class="d-flex flex-column align-items-center px-5 py-3">
             <h4>End Date</h4>
             <p>
               {{ subscription.endDate | date : "medium" }}
             </p>
           </div>
-          <div class="px-5 py-3 d-flex flex-column align-items-center">
+          <div class="d-flex flex-column align-items-center px-5 py-3">
             <h4>Price</h4>
             <p>
               {{ subscription.price | currency : "EUR" }}
             </p>
           </div>
-          <div class="px-5 py-3 d-flex flex-column align-items-center">
+          <div class="d-flex flex-column align-items-center px-5 py-3">
             <h4>Discount Value</h4>
             <p>
               {{ subscription.discountValue / 100 | percent }}
@@ -136,8 +68,10 @@
             </button>
           </div>
         </div>
-        <div class="d-flex flex-start flex-column">
-          <div class="px-5 py-3">
+        <div
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <div class="d-flex flex-column align-items-center px-5 py-3">
             <h4>Subscriber Name</h4>
             <p>
               {{
@@ -147,13 +81,13 @@
               }}
             </p>
           </div>
-          <div class="px-5 py-3">
+          <div class="d-flex flex-column align-items-center px-5 py-3">
             <h4>Email</h4>
             <p>
               {{ subscription.subscriber.email }}
             </p>
           </div>
-          <div class="px-5 py-3">
+          <div class="d-flex flex-column align-items-center px-5 py-3">
             <h4>Phone Number</h4>
             <p>
               {{ subscription.subscriber.phoneNumber }}
@@ -164,3 +98,11 @@
     </div>
   </div>
 </ng-container>
+
+<div
+  class="alert alert-danger my-5 position-fixed top-0 start-0"
+  role="alert"
+  *ngIf="isDangerShown"
+>
+  {{ errorMessage }}
+</div>

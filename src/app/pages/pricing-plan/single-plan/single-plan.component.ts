@@ -75,7 +75,7 @@ export class SinglePlanComponent implements OnInit {
 
     this.alertTimeout = setTimeout(() => {
       this.isDangerShown = false
-    })
+    }, 3000)
   }
 
   successAlert(success?: string) {
@@ -85,7 +85,7 @@ export class SinglePlanComponent implements OnInit {
 
     this.alertTimeout = setTimeout(() => {
       this.isSuccessShown = false;
-    }, 2500)
+    }, 3000)
   }
 
 }

@@ -83,7 +83,7 @@ export class SingleSubscriberComponent implements OnInit {
 
     this.alertTimeout = setTimeout(() => {
       this.isDangerShown = false
-    })
+    }, 3000)
   }
 
   successAlert(success?: string) {
@@ -93,7 +93,7 @@ export class SingleSubscriberComponent implements OnInit {
 
     this.alertTimeout = setTimeout(() => {
       this.isSuccessShown = false;
-    }, 2500)
+    }, 3000)
   }
 
   navigate(id: number) {
