@@ -36,7 +36,7 @@ export class LogsService {
   }
 
   getOne(code: string): Observable<Logs> {
-    const params = new HttpParams().set("searchquery", code)
+    // const params = new HttpParams().set("searchquery", code)
 
     return this.http.get<Logs>(`https://localhost:7091/api/Logs/code/${code}`)
       .pipe(

@@ -4,9 +4,19 @@ import { LogsComponent } from './logs.component';
 import { SingleLogComponent } from './single-log/single-log.component';
 
 const routes: Routes = [
-  { path: "", component: LogsComponent },
-  { path: ":code", component: SingleLogComponent }
-
+  {
+    path: "",
+    children: [
+      {
+        path: "",
+        component: LogsComponent
+      },
+      {
+        path: ":code",
+        component: SingleLogComponent
+      }
+    ]
+  }
 ];
 
 @NgModule({
